@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mr-16{
+    margin-right: 16px;
+}
+
+.full-width{
+    width: 100%;
+}
+
+// input:-webkit-autofill {
+//     transition: background-color 600000s 0s, color 600000s 0s;
+// }
+
+// textarea:-webkit-autofill {
+//     transition: background-color 600000s 0s, color 600000s 0s;
+// }
