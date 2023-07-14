@@ -15,6 +15,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-top: 32px;
 }
 
+.p-16{
+    padding: 16px;
+}
+
 .full-width{
     width: 100%;
 }
@@ -23,6 +27,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     position: absolute !important;
     top: 0;
     right: 0;
+}
+
+.c-white{
+    color: white;
 }
 
 // input:-webkit-autofill {

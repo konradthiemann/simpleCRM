@@ -31,6 +31,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 // import { AngularFireModule } from '@angular/fire/compat/public_api';
 // import { AngularFireModule } from '@angular/fire/compat/firebase.app.module';
 
@@ -44,7 +45,8 @@ import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.com
     DialogAddUserComponent,
     UserDetailComponent,
     DialogEditAddressComponent,
-    DialogEditUserComponent
+    DialogEditUserComponent,
+    LegalNoticeComponent
   ],
   imports: [
     BrowserModule,
