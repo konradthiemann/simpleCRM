@@ -32,6 +32,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { DialogEditAddressComponent } from './dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-user.component';
 // import { AngularFireModule } from '@angular/fire/compat/public_api';
 // import { AngularFireModule } from '@angular/fire/compat/firebase.app.module';
 
@@ -46,7 +48,9 @@ import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
     UserDetailComponent,
     DialogEditAddressComponent,
     DialogEditUserComponent,
-    LegalNoticeComponent
+    LegalNoticeComponent,
+    PrivacyPolicyComponent,
+    DialogDeleteUserComponent
   ],
   imports: [
     BrowserModule,

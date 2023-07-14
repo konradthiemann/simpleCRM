@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/models/user.class';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-user.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -13,7 +14,11 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
 })
 export class UserDetailComponent implements OnInit{
 
-  constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog){}
+  constructor(
+    private route: ActivatedRoute, 
+    private firestore: AngularFirestore, 
+    public dialog: MatDialog
+    ){}
 
   userId: any = '';
   user: User = new User;
@@ -45,6 +50,12 @@ export class UserDetailComponent implements OnInit{
 
   editUserDetail(){
     const dialog = this.dialog.open(DialogEditUserComponent);
+    dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.userId =  this.userId;
+  }
+
+  deleteUser(user:any){
+    const dialog = this.dialog.open(DialogDeleteUserComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId =  this.userId;
   }
