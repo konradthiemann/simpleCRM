@@ -1,4 +1,4 @@
-.user-detail-header{
+.user-detail-header {
     min-height: 250px;
     background-color: #ff5b27;
     color: white;
@@ -6,24 +6,73 @@
     align-items: flex-end;
     flex-direction: row;
     padding: 16px;
-    
-        img{
-            height: 100px;
-            width: 100px;
-            object-fit: cover;
-            border-radius: 100%;
-        }
+
+    img {
+        height: 100px;
+        width: 100px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
 }
 
-.user-details{
+.user-details {
     margin-left: 32px;
     height: 100px;
     justify-content: center;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-        h2{
-            margin-bottom: 0;
-        }
+
+    h2 {
+        margin-bottom: 0;
+    }
 }
 
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr {
+        border-bottom: 1px solid rgba($color: #FFFFFF, $alpha: 0.5);
+        cursor: pointer;
+
+        &:first-child {
+            cursor: unset;
+
+            &:hover {
+                background-color: unset;
+            }
+        }
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        td {
+            height: 48px;
+
+            &:first-child {
+                padding-left: 16px;
+            }
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    th {
+        text-align: start;
+
+        &:first-child {
+            padding-left: 16px;
+        }
+    }
+
+}
+
+.add-finance-button{
+    position: absolute;
+    bottom: 56px;
+    right: 56px;
+}

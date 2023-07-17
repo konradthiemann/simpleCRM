@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +21,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore, collection } from '@angular/fire/firestore';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
@@ -34,9 +33,11 @@ import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.com
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-user.component';
-// import { AngularFireModule } from '@angular/fire/compat/public_api';
-// import { AngularFireModule } from '@angular/fire/compat/firebase.app.module';
-
+import { DialogLogInComponent } from './dialog-log-in/dialog-log-in.component';
+import { DialogLogInSuccessfulComponent } from './dialog-log-in-successful/dialog-log-in-successful.component';
+import { SharedService } from './shared.service';
+import { DialogAddFinanceComponent } from './dialog-add-finance/dialog-add-finance.component';
+import { DialogAddFinanceSuccessfulComponent } from './dialog-add-finance-successful/dialog-add-finance-successful.component';
 
 
 @NgModule({
@@ -50,7 +51,11 @@ import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-us
     DialogEditUserComponent,
     LegalNoticeComponent,
     PrivacyPolicyComponent,
-    DialogDeleteUserComponent
+    DialogDeleteUserComponent,
+    DialogLogInComponent,
+    DialogLogInSuccessfulComponent,
+    DialogAddFinanceComponent,
+    DialogAddFinanceSuccessfulComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,9 +80,9 @@ import { DialogDeleteUserComponent } from './dialog-delete-user/dialog-delete-us
     MatCardModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    MatMenuModule
+    MatMenuModule,
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

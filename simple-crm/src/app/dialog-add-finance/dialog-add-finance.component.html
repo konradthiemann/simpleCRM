@@ -1,0 +1,61 @@
+<div class="dialog-container">
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <h1 mat-dialog-title>Add finance</h1>
+    <div mat-dialog-content>
+        <div>
+            <mat-form-field appearance="outline" class="mr-16 mt-8">
+                <mat-label>Category</mat-label>
+                <input class="disabled-white" disabled required  [(ngModel)]="finance.category" matInput value="{{category}}" placeholder="Category">
+                <!-- <mat-hint>please enter a name</mat-hint> -->
+            </mat-form-field>
+
+            <button mat-button [matMenuTriggerFor]="menu">select</button>
+            <mat-menu #menu="matMenu">
+                <button (click)="addCategory('Grocery Shopping/Food & Drinks')" mat-menu-item>Grocery Shopping/Food & Drinks</button>
+                <button (click)="addCategory('Household & Personal Care Products')" mat-menu-item>Household & Personal Care Products</button>
+                <button (click)="addCategory('Cosmetics')" mat-menu-item>Cosmetics</button>
+                <button (click)="addCategory('Fuel/Gas')" mat-menu-item>Fuel/Gas</button>
+                <button (click)="addCategory('Online Shopping')" mat-menu-item>Online Shopping</button>
+                <button (click)="addCategory('Dining Out/Entertainment')" mat-menu-item>Dining Out/Entertainment</button>
+                <button (click)="addCategory('Clothing & Jewelry')" mat-menu-item>Clothing & Jewelry</button>
+                <button (click)="addCategory('Bummis Purchases')" mat-menu-item>Bummi's Purchases</button>
+                <button (click)="addCategory('Lampis Purchases')" mat-menu-item>Lampi's Purchases</button>
+                <button (click)="addCategory('Education')" mat-menu-item>Education</button>
+                <button (click)="addCategory('Home (Decor, Organization, etc.)')" mat-menu-item>Home (Decor, Organization, etc.)</button>
+                <button (click)="addCategory('Hobbies/Accessories, etc.')" mat-menu-item>Hobbies/Accessories, etc.</button>
+                <button (click)="addCategory('Leisure Activities')" mat-menu-item>Leisure Activities</button>
+                <button (click)="addCategory('Gifts')" mat-menu-item>Gifts</button>
+                <button (click)="addCategory('Eating Out')" mat-menu-item>Eating Out</button>
+                <button (click)="addCategory('Health/Medications/...')" mat-menu-item>Health/Medications/...</button>
+                <button (click)="addCategory('Special Purchases/Expenses')" mat-menu-item>Special Purchases/Expenses</button>
+                <button (click)="addCategory('Mobility')" mat-menu-item>Mobility</button>
+                <button (click)="addCategory('Miscellaneous Expenses')" mat-menu-item>Miscellaneous Expenses</button>
+            </mat-menu>
+
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Amount</mat-label>
+            <input required [disabled]="loading" [(ngModel)]="finance.amount" type="number" matInput placeholder="Amount">
+            <!-- <mat-hint>please enter a name</mat-hint> -->
+        </mat-form-field>
+
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date</mat-label>
+                <input required [disabled]="loading" [(ngModel)]="creationDate" matInput [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field class="full-width">
+            <mat-label>Note</mat-label>
+            <textarea [disabled]="loading" [(ngModel)]="note" matInput placeholder="leave a note..."></textarea>
+          </mat-form-field>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="dialogRef.close()">Cancel</button>
+            <button mat-button (click)="saveFinance()" [mat-dialog-close]="" cdkFocusInitial>Save</button>
+        </div>
+    </div>
+</div>

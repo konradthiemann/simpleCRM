@@ -5,7 +5,7 @@
         <div>
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>First name</mat-label>
-                <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First name">
+                <input required [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First name">
                 <!-- <mat-hint>please enter a name</mat-hint> -->
             </mat-form-field>
 
@@ -19,7 +19,7 @@
         <div>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>E-mail</mat-label>
-                <input [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="E-mail">
+                <input required [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="E-mail">
                 <!-- <mat-hint>please enter a name</mat-hint> -->
             </mat-form-field>
         </div>
@@ -27,7 +27,7 @@
         <div>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Birth date</mat-label>
-                <input [disabled]="loading" [(ngModel)]="birthDate" matInput [matDatepicker]="picker1">
+                <input required [disabled]="loading" [(ngModel)]="birthDate" matInput [matDatepicker]="picker1">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
@@ -37,7 +37,7 @@
         <div>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Street + house no.</mat-label>
-                <input [disabled]="loading" [(ngModel)]="user.street" matInput placeholder="Street + house no.">
+                <input required [disabled]="loading" [(ngModel)]="user.street" matInput placeholder="Street + house no.">
                 <!-- <mat-hint>please enter a name</mat-hint> -->
             </mat-form-field>
         </div>
@@ -45,16 +45,24 @@
         <div>
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>Zip code</mat-label>
-                <input [disabled]="loading" [(ngModel)]="user.zipCode" matInput placeholder="Zip code">
+                <input required [disabled]="loading" [(ngModel)]="user.zipCode" matInput placeholder="Zip code">
                 <!-- <mat-hint>please enter a name</mat-hint> -->
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>City</mat-label>
-                <input [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="City">
+                <input required [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="City">
                 <!-- <mat-hint>please enter a name</mat-hint> -->
             </mat-form-field>
         </div>
+<!-- 
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>password</mat-label>
+                <input required [disabled]="loading" [(ngModel)]="user.password" matInput placeholder="password">
+
+            </mat-form-field>
+        </div> -->
 
         <div mat-dialog-actions>
             <button mat-button (click)="dialogRef.close()">Cancel</button>

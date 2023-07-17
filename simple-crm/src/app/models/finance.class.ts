@@ -1,0 +1,33 @@
+type NewType = string;
+
+export class Finance {
+    userId: string | undefined;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    creationDate: number | undefined;
+    category: string | undefined;
+    amount: number | undefined;
+    note:string | undefined;
+
+    constructor(obj?: any) {
+        this.userId = obj ? obj.userId : '';
+        this.firstName = obj ? obj.firstName : '';
+        this.lastName = obj ? obj.lastName : '';
+        this.creationDate = obj ? obj.creationDate : '';
+        this.category = obj ? obj.category : '';
+        this.amount = obj ? obj.amount : '';
+        this.note = obj ? obj.note : '';
+    }
+
+    public toJSON() {
+        return {
+            userId: this.userId,
+            firstName: this.firstName,
+            lastName: this.lastName,
+            creationDate: this.creationDate,
+            category: this.category,
+            amount:this.amount,
+            note:this.note,
+        }
+    }
+}

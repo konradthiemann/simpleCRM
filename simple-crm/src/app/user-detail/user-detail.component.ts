@@ -6,6 +6,9 @@ import { User } from 'src/models/user.class';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-user.component';
+import { collection, getDocs, getFirestore } from '@angular/fire/firestore';
+import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -17,16 +20,28 @@ export class UserDetailComponent implements OnInit{
   constructor(
     private route: ActivatedRoute, 
     private firestore: AngularFirestore, 
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public sharedService: SharedService,
     ){}
 
+  allFinances:any= [];  
+
   userId: any = '';
+  firstName:any;
+  lastName: any;
   user: User = new User;
+  currentUserEmail:any;
 
   ngOnInit(): void {
+    this.getUserId();
+    this.currentUserEmail = this.sharedService.getCurrentEmail();
+    
+    this.getFinances();
+  }
+
+  getUserId(){
     this.route.paramMap.subscribe( paramMap => {
       this.userId = paramMap.get('id');
-      console.log(this.userId);
       this.getUser();
     })
   }
@@ -38,8 +53,27 @@ export class UserDetailComponent implements OnInit{
     .valueChanges()
     .subscribe((user: any) => {
       this.user = new User(user);
-      console.log(this.user, 'retrieved user');
     });
+  }
+
+  async getFinances(){
+
+
+    
+    const db = getFirestore();
+    const colRef = collection(db, "finances");
+    const docsSnap = await getDocs(colRef);
+
+    this.allFinances = [];
+
+    docsSnap.forEach(doc => {
+      if (doc.get('userId') == this.userId) {
+        
+        this.allFinances.push(doc.get('firstName'));
+
+        console.log(doc.get('userId'))
+        }
+      });
   }
 
   editUserAddress(){
@@ -59,4 +93,16 @@ export class UserDetailComponent implements OnInit{
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId =  this.userId;
   }
+
+  openAddFinanceDialog(){
+    const dialog = this.dialog.open(DialogAddFinanceComponent);
+    dialog.componentInstance.userId =  this.userId;
+    dialog.componentInstance.user = new User(this.user.toJSON());
+  }
+
+  openNoteDialog(){
+  
+  }
 }
+
+

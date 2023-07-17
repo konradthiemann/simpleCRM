@@ -33,3 +33,41 @@
         {{user.zipCode}} {{user.city}}
     </mat-card-content>
 </mat-card>
+
+<mat-card class="mt-32">
+
+    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menuAddress">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menuAddress="matMenu">
+        <button (click)="editUserAddress()" mat-menu-item>Edit</button>
+    </mat-menu>
+
+    <mat-card-header>
+        <mat-card-title>Finances</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <table class="user-table">
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+            <tr *ngFor="let finance of allFinances" (click)="openNoteDialog()">
+                <td>{{finance['firstName']}} {{finance['lastName']}}</td>
+                <td>{{finance['category']}}</td>
+                <td>{{finance['amount']}}</td>
+                <td>{{finance['creationDate']}}</td>
+                <button class="menu-icon pin-right" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+
+<button *ngIf="user.email == currentUserEmail" (click)="openAddFinanceDialog()" class="add-finance-button" mat-fab color="primary" matTooltip="Add user"
+    matTooltipPosition="above">
+    <mat-icon>add</mat-icon>
+</button>
