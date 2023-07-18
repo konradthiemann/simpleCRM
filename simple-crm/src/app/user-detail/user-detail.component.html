@@ -11,8 +11,13 @@
     <img src="./../../assets/img/profile9-modified.png">
 
     <div class="user-details">
-        <h2>{{user.firstName}} {{user.lastName}}</h2> <br>
-        {{user.email}}
+        <h2>{{user.firstName}} {{user.lastName}}</h2>
+        <br>
+        Birth date: {{user.birthDate | date : 'yyyy-MM-dd'}}
+        <br>
+        <div>
+            Email: <a class="c-white" href="email: {{user.email}}">{{user.email}}</a>
+        </div>
     </div>
 </mat-card>
 
@@ -35,33 +40,31 @@
 </mat-card>
 
 <mat-card class="mt-32">
-
-    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menuAddress">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menuAddress="matMenu">
-        <button (click)="editUserAddress()" mat-menu-item>Edit</button>
-    </mat-menu>
-
     <mat-card-header>
         <mat-card-title>Finances</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <table class="user-table">
-            <tr>
+            <tr >
                 <th>Name</th>
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
             <tr *ngFor="let finance of allFinances" (click)="openNoteDialog()">
-                <td>{{finance['firstName']}} {{finance['lastName']}}</td>
-                <td>{{finance['category']}}</td>
-                <td>{{finance['amount']}}</td>
-                <td>{{finance['creationDate']}}</td>
-                <button class="menu-icon pin-right" mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
-                    <mat-icon>delete</mat-icon>
+                <td>{{finance.firstName}} {{finance.lastName}}</td>
+                <td>{{finance.category}}</td>
+                <td>{{finance.amount}}€</td>
+                <td>{{finance.creationDate | date : 'yyyy-MM-dd'}}</td>
+
+                <button mat-icon-button class="pin-right" [matMenuTriggerFor]="menuAddress">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
+                <mat-menu #menuAddress="matMenu">
+                    <button (click)="editFinance()" mat-menu-item>Edit</button>
+                    <button (click)="deleteFinance(finance)" mat-menu-item>delete</button>
+                </mat-menu>
+
             </tr>
         </table>
     </mat-card-content>

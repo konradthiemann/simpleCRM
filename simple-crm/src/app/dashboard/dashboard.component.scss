@@ -1,4 +1,17 @@
-.testbtn{
-    width: 100px;
-    height: 50px;
+mat-card{
+    h1,h2{
+        text-align: center;
+    }
+}
+
+#myChartPie{
+    height: 600px !important;
+    width: 600px !important;
+}
+
+#divChartPie{
+    justify-content: center !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

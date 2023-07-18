@@ -4,7 +4,7 @@ export class Finance {
     userId: string | undefined;
     firstName: string | undefined;
     lastName: string | undefined;
-    creationDate: number | undefined;
+    creationDate: any | undefined;
     category: string | undefined;
     amount: number | undefined;
     note:string | undefined;

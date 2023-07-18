@@ -21,7 +21,8 @@
 
         <div mat-dialog-actions>
             <button mat-button (click)="dialogRef.close()">Cancel</button>
-            <button mat-button (click)="logIn()" [mat-dialog-close]="" cdkFocusInitial>Save</button>
+            <button mat-button (click)="logIn(null, null)" [mat-dialog-close]="" cdkFocusInitial>Log in</button>
+            <button mat-button (click)="logIn('max-mustermann@muster.de', 1)" [mat-dialog-close]="" cdkFocusInitial>Guest</button>
         </div>
     </div>
 </div>

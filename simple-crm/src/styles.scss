@@ -3,6 +3,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.d-flex{
+    display: flex;
+}
+
 .mr-16{
     margin-right: 16px;
 }
@@ -19,18 +23,34 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 16px;
 }
 
+.pt-16{
+    padding-top: 16px;
+}
+
+.pr-16{
+    padding-right: 16px;
+}
+
+.gap-32{
+    gap: 32px;
+}
+
+.half-width{
+    width: 50%;
+}
+
 .full-width{
     width: 100%;
 }
 
 .pin-right-upper-corner{
     position: absolute !important;
-    top: 0;
-    right: 0;
+    top: 16px;
+    right: 16px;
 }
 
 .pin-right{
-    position: absolute;
+    position: absolute !important;
     right: 16px;
 }
 

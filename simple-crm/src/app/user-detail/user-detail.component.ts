@@ -9,57 +9,64 @@ import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-u
 import { collection, getDocs, getFirestore } from '@angular/fire/firestore';
 import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
 import { SharedService } from '../shared.service';
+import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
 
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss']
 })
-export class UserDetailComponent implements OnInit{
+export class UserDetailComponent implements OnInit {
 
   constructor(
-    private route: ActivatedRoute, 
-    private firestore: AngularFirestore, 
+    private route: ActivatedRoute,
+    private firestore: AngularFirestore,
     public dialog: MatDialog,
     public sharedService: SharedService,
-    ){}
+  ) { }
 
-  allFinances:any= [];  
+  allFinances: any = [];
 
   userId: any = '';
-  firstName:any;
+  firstName: any;
   lastName: any;
   user: User = new User;
-  currentUserEmail:any;
+  currentUserEmail: any;
 
   ngOnInit(): void {
+    this.checkForLogIn();
     this.getUserId();
     this.currentUserEmail = this.sharedService.getCurrentEmail();
-    
     this.getFinances();
+    this.subscribeFinance();
   }
 
-  getUserId(){
-    this.route.paramMap.subscribe( paramMap => {
+  checkForLogIn(){
+    let id = this.sharedService.getCurrentUserId();
+    if (id == undefined) {
+      this.dialog.open(DialogLogInComponent);
+    }     
+  }
+
+  getUserId() {
+    this.route.paramMap.subscribe(paramMap => {
       this.userId = paramMap.get('id');
       this.getUser();
     })
   }
 
-  getUser(){
+  getUser() {
     this.firestore
-    .collection('users')
-    .doc(this.userId)
-    .valueChanges()
-    .subscribe((user: any) => {
-      this.user = new User(user);
-    });
+      .collection('users')
+      .doc(this.userId)
+      .valueChanges()
+      .subscribe((user: any) => {
+        this.user = new User(user);
+      });
   }
 
-  async getFinances(){
+  async getFinances() {
 
-
-    
     const db = getFirestore();
     const colRef = collection(db, "finances");
     const docsSnap = await getDocs(colRef);
@@ -68,40 +75,74 @@ export class UserDetailComponent implements OnInit{
 
     docsSnap.forEach(doc => {
       if (doc.get('userId') == this.userId) {
-        
-        this.allFinances.push(doc.get('firstName'));
-
-        console.log(doc.get('userId'))
-        }
-      });
+        this.allFinances.push(doc.data());
+      }
+    });
   }
 
-  editUserAddress(){
+  subscribeFinance() {
+
+    this.firestore
+      .collection('finances')
+      .valueChanges()
+      .subscribe((changes: any) => {
+        this.getFinances();
+      })
+  }
+
+  editUserAddress() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
-    dialog.componentInstance.user =  new User(this.user.toJSON());
-    dialog.componentInstance.userId =  this.userId;
+    dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.userId = this.userId;
   }
 
-  editUserDetail(){
+  editUserDetail() {
     const dialog = this.dialog.open(DialogEditUserComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
-    dialog.componentInstance.userId =  this.userId;
+    dialog.componentInstance.userId = this.userId;
   }
 
-  deleteUser(user:any){
+  deleteUser(user: any) {
     const dialog = this.dialog.open(DialogDeleteUserComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
-    dialog.componentInstance.userId =  this.userId;
+    dialog.componentInstance.userId = this.userId;
   }
 
-  openAddFinanceDialog(){
+  openAddFinanceDialog() {
     const dialog = this.dialog.open(DialogAddFinanceComponent);
-    dialog.componentInstance.userId =  this.userId;
+    dialog.componentInstance.userId = this.userId;
     dialog.componentInstance.user = new User(this.user.toJSON());
   }
 
-  openNoteDialog(){
-  
+  openNoteDialog() {
+
+  }
+
+  editFinance() {
+
+  }
+
+  async deleteFinance(finance: any) {
+    for (let i = 0; i < this.allFinances.length; i++) {
+
+      if (this.allFinances[i] === finance) {
+        const db = getFirestore();
+        const colRef = collection(db, "finances");
+        const docsSnap = await getDocs(colRef);
+
+        docsSnap.forEach(doc => {
+          if (doc.get('creationDate') == finance.creationDate) {
+            const docId = doc.id;
+            this.allFinances.splice(i, 1);
+            this.firestore
+              .collection('finances')
+              .doc(docId)
+              .delete()
+          }
+        });
+      }
+
+    }
   }
 }
 

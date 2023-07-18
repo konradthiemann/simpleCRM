@@ -21,6 +21,14 @@ export class SharedService {
     console.log('global user id set to ', id, this.currentUserFirstName, this.currentUserLastName)
   }
 
+  getCurrentUserFirstName(){
+    return this.currentUserFirstName;
+  }
+
+  getCurrentUserLastName(){
+    return this.currentUserLastName;
+  }
+
   getCurrentUserId(){
     return this.currentUserId; 
   }

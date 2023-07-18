@@ -30,14 +30,14 @@ export class DialogLogInComponent {
   password:any;
   // router: any;
 
-  async logIn(){
+  async logIn(email:any, password:any){
     this.loading = true
     const db = getFirestore();
     const colRef = collection(db, "users");
     const docsSnap = await getDocs(colRef);
 
     docsSnap.forEach(doc => {
-      if (doc.get('email') == this.email && doc.get('password') == this.password) {
+      if (doc.get('email') == (this.email || email) && doc.get('password') == (this.password | password)) {
         this.sharedService.setCurrentUserInfo(doc.id, doc);
         this.dialog.open(DialogLogInSuccessfulComponent, {
           enterAnimationDuration:'450ms',

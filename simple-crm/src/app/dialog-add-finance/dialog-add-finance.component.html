@@ -11,6 +11,7 @@
 
             <button mat-button [matMenuTriggerFor]="menu">select</button>
             <mat-menu #menu="matMenu">
+                <!-- <button *ngFor="let category of categoryList" (click)="addCategory(category)" mat-menu-item>{{category}}</button> -->
                 <button (click)="addCategory('Grocery Shopping/Food & Drinks')" mat-menu-item>Grocery Shopping/Food & Drinks</button>
                 <button (click)="addCategory('Household & Personal Care Products')" mat-menu-item>Household & Personal Care Products</button>
                 <button (click)="addCategory('Cosmetics')" mat-menu-item>Cosmetics</button>
