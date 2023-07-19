@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit {
           label: 'expenses in €',
           data: [this.expenses[0], this.expenses[1], this.expenses[2], this.expenses[3], this.expenses[4], this.expenses[5], this.expenses[6], this.expenses[7], this.expenses[8], this.expenses[9], this.expenses[10], this.expenses[11]],
           backgroundColor: [
-            'rgba(255, 0, 0, 0.2)', // Neue Hintergrundfarbe für Einnahmen (rot mit geringer Deckkraft)
+            'rgba(255, 0, 0, 0.2)',
           'rgba(0, 255, 0, 0.2)',
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
