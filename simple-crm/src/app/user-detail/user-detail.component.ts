@@ -124,6 +124,7 @@ export class UserDetailComponent implements OnInit {
   openNoteDialog(transaction:any) {
     const dialog = this.dialog.open(DialogShowNoteComponent);
     dialog.componentInstance.userId = this.userId;
+    dialog.componentInstance.user = transaction;
     console.log(transaction)
   }
 
