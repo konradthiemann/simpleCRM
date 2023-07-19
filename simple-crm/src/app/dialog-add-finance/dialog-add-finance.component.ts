@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 
-import { doc } from "firebase/firestore"; 
+import { doc } from "firebase/firestore";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Finance } from '../models/finance.class';
 import { DialogAddFinanceSuccessfulComponent } from '../dialog-add-finance-successful/dialog-add-finance-successful.component';
@@ -14,24 +14,24 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./dialog-add-finance.component.scss']
 })
 export class DialogAddFinanceComponent {
-  
+
   constructor(
-    private firestore: Firestore, 
+    private firestore: Firestore,
     public dialogRef: MatDialogRef<DialogAddFinanceComponent>,
     public dialog: MatDialog,
-    public sharedService : SharedService,
-    ){}
+    public sharedService: SharedService,
+  ) { }
 
   finance: Finance = new Finance();
   creationDate: Date | undefined;
   loading: boolean = false;
   category: any;
   note: any = '';
-  userId:any;
-  transaction:any;
+  userId: any;
+  transaction: any;
   user!: User;
 
-  saveFinance(){
+  saveFinance() {
     this.finance.creationDate = this.creationDate?.getTime();
     this.finance.category = this.category;
     this.finance.userId = this.userId;
@@ -41,17 +41,17 @@ export class DialogAddFinanceComponent {
     this.finance.lastName = this.sharedService.getCurrentUserLastName();
 
     this.loading = true;
-    addDoc(collection(this.firestore, 'finances'), this.finance.toJSON()).then((result:any) => {
+    addDoc(collection(this.firestore, 'finances'), this.finance.toJSON()).then((result: any) => {
       this.loading = false;
       this.dialog.open(DialogAddFinanceSuccessfulComponent, {
-        enterAnimationDuration:'450ms',
-        exitAnimationDuration:'450ms'
+        enterAnimationDuration: '450ms',
+        exitAnimationDuration: '450ms'
       });
       this.dialogRef.close();
     });
   }
 
-  addCategory(category:any){
+  addCategory(category: any) {
     this.category = category;
   }
 }

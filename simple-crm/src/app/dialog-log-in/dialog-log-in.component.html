@@ -7,7 +7,6 @@
             <mat-form-field appearance="outline" class="full-width mt-8">
                 <mat-label>E-mail</mat-label>
                 <input [disabled]="loading" [(ngModel)]="email" matInput placeholder="E-mail">
-                <!-- <mat-hint>please enter a name</mat-hint> -->
             </mat-form-field>
         </div>
 
@@ -15,18 +14,18 @@
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Enter your password</mat-label>
                 <input [disabled]="loading" [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-              </mat-form-field>
+            </mat-form-field>
         </div>
 
         <div>
-            <p class="c-pink" *ngIf="noMatch">wrong email or password</p> 
+            <p class="c-pink" *ngIf="noMatch">wrong email or password</p>
         </div>
 
         <div mat-dialog-actions>
-            <!-- <button mat-button (click)="dialogRef.close()">Cancel</button> -->
             <button mat-button (click)="logIn(null, null)" cdkFocusInitial>Log in</button>
             <button mat-button (click)="logIn('max-mustermann@muster.de', 1)" [mat-dialog-close]=""
                 cdkFocusInitial>Guest</button>
@@ -38,7 +37,8 @@
 
         <div>
             <mat-dialog-actions class="full-width mt-8">
-                <button mat-button (click)="forgotPassword()" [mat-dialog-close]="" cdkFocusInitial>Forgot password</button>
+                <button mat-button (click)="forgotPassword()" [mat-dialog-close]="" cdkFocusInitial>Forgot
+                    password</button>
             </mat-dialog-actions>
         </div>
 

@@ -5,39 +5,38 @@ import { Injectable } from '@angular/core';
 })
 export class SharedService {
   currentUserId: any;
-  currentDoc:any;
-  currentUserFirstName:any;
-  currentUserLastName:any;
-  currentUserEmail:any;
+  currentDoc: any;
+  currentUserFirstName: any;
+  currentUserLastName: any;
+  currentUserEmail: any;
 
   constructor() { }
 
-  setCurrentUserInfo(id:any, doc:any){
+  setCurrentUserInfo(id: any, doc: any) {
     this.currentUserId = id;
     this.currentDoc = doc;
     this.currentUserFirstName = doc.get('firstName');
     this.currentUserLastName = doc.get('lastName');
     this.currentUserEmail = doc.get('email');
-    console.log('global user id set to ', id, this.currentUserFirstName, this.currentUserLastName)
   }
 
-  getCurrentUserFirstName(){
+  getCurrentUserFirstName() {
     return this.currentUserFirstName;
   }
 
-  getCurrentUserLastName(){
+  getCurrentUserLastName() {
     return this.currentUserLastName;
   }
 
-  getCurrentUserId(){
-    return this.currentUserId; 
+  getCurrentUserId() {
+    return this.currentUserId;
   }
 
-  getCurrentDoc(){
-    return this.currentDoc; 
+  getCurrentDoc() {
+    return this.currentDoc;
   }
 
-  getCurrentEmail(){
+  getCurrentEmail() {
     return this.currentUserEmail;
   }
 }

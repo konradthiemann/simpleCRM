@@ -7,7 +7,9 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-log-in-successful.component.scss']
 })
 export class DialogLogInSuccessfulComponent implements OnInit{
+
   constructor(public dialogRef: MatDialogRef<DialogLogInSuccessfulComponent>) { }
+  
 ngOnInit(): void {
   setTimeout(() => {
     this.dialogRef.close();

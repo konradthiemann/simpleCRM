@@ -7,8 +7,8 @@ export class Finance {
     creationDate: any | undefined;
     category: string | undefined;
     amount: number | undefined;
-    note:string | undefined;
-    transaction:string | undefined;
+    note: string | undefined;
+    transaction: string | undefined;
 
     constructor(obj?: any) {
         this.userId = obj ? obj.userId : '';
@@ -28,9 +28,9 @@ export class Finance {
             lastName: this.lastName,
             creationDate: this.creationDate,
             category: this.category,
-            amount:this.amount,
-            note:this.note,
-            transaction:this.transaction,
+            amount: this.amount,
+            note: this.note,
+            transaction: this.transaction,
         }
     }
 }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { collection, getDocs, getFirestore } from '@angular/fire/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -27,22 +26,21 @@ export class DialogForgotPasswordComponent {
     private http: HttpClient,
     public dialogRef: MatDialogRef<DialogForgotPasswordComponent>,
     public dialog: MatDialog,
-    ) {
-      dialogRef.disableClose = true;
-    }
+  ) {
+    dialogRef.disableClose = true;
+  }
 
   contactForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   })
 
-  loading:any;
-  email:any;
-  emailSent:boolean =  false;
-  
+  loading: any;
+  email: any;
+  emailSent: boolean = false;
+
   onSubmit(ngForm: any) {
-    
+
     const randomPassword = this.randomPasswordGenerator();
-    console.log(this.contactForm.valid)
     if (this.contactForm.valid) {
       let data = {
         recipient: this.contactForm.value.email,
@@ -64,7 +62,7 @@ export class DialogForgotPasswordComponent {
       this.throwErrors()
     }
   }
-  
+
   timeOutSendMail() {
     setTimeout(() => {
       this.emailSent = false;
@@ -74,20 +72,19 @@ export class DialogForgotPasswordComponent {
 
   throwErrors() {
     if (this.contactForm.controls['email'].status === 'INVALID') {
-      console.log('wrong email');
     }
   }
 
-  randomPasswordGenerator(){
+  randomPasswordGenerator() {
     let chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let passwordLength = 12;
     let password = "";
-   
+
     for (let i = 0; i <= passwordLength; i++) {
       let randomNumber = Math.floor(Math.random() * chars.length);
-      password += chars.substring(randomNumber, randomNumber +1);
-     }
+      password += chars.substring(randomNumber, randomNumber + 1);
+    }
 
-     return password;
+    return password;
   }
 }

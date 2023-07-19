@@ -9,14 +9,14 @@ import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
   templateUrl: './legal-notice.component.html',
   styleUrls: ['./legal-notice.component.scss']
 })
-export class LegalNoticeComponent implements OnInit{
+export class LegalNoticeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private sharedService: SharedService, private firestore: Firestore) { }
-  
+
   ngOnInit(): void {
     let id = this.sharedService.getCurrentUserId();
     if (id == undefined) {
       this.dialog.open(DialogLogInComponent);
-    }     
+    }
   }
 }

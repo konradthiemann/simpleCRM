@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { collection, getCountFromServer, getFirestore, getDocs, doc, query, where } from '@angular/fire/firestore';
-import { Router,NavigationEnd  } from '@angular/router';
+import { collection, getFirestore, getDocs, doc, query, where } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { DialogLogInSuccessfulComponent } from '../dialog-log-in-successful/dialog-log-in-successful.component';
 import { SharedService } from '../shared.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogForgotPasswordComponent } from '../dialog-forgot-password/dialog-forgot-password.component';
-import { filter } from 'rxjs/operators';
-
-
 
 @Component({
   selector: 'app-dialog-log-in',
@@ -26,7 +22,6 @@ export class DialogLogInComponent implements OnInit {
     private sharedService: SharedService,
   ) {
     dialogRef.disableClose = true;
-    
   }
 
   loading = false;
@@ -71,7 +66,6 @@ export class DialogLogInComponent implements OnInit {
     })
       this.loading = false;
       this.noMatch = true;
-    
   }
 
   checkRememberMe() {

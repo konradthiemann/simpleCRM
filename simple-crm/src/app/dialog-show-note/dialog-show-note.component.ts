@@ -5,13 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './dialog-show-note.component.html',
   styleUrls: ['./dialog-show-note.component.scss']
 })
-export class DialogShowNoteComponent implements OnInit{
+export class DialogShowNoteComponent implements OnInit {
 
   ngOnInit(): void {
     this.note = this.user['note'];
   }
 
-  user:any;
-  userId:any;
-  note:any;
+  user: any;
+  userId: any;
+  note: any;
 }

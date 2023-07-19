@@ -13,40 +13,40 @@ import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit{
+export class UserComponent implements OnInit {
 
   user: User = new User();
   allUsers = [];
-  
+
 
   constructor(
-    public dialog: MatDialog, 
-    private firestore: AngularFirestore, 
-    private sharedService: SharedService){}
+    public dialog: MatDialog,
+    private firestore: AngularFirestore,
+    private sharedService: SharedService) { }
 
-    
+
   ngOnInit(): void {
     this.checkForLogIn();
     this.updateAllUsers();
   }
 
-  checkForLogIn(){
+  checkForLogIn() {
     let id = this.sharedService.getCurrentUserId();
     if (id == undefined) {
       this.dialog.open(DialogLogInComponent);
-    }     
+    }
   }
 
-  updateAllUsers(){
+  updateAllUsers() {
     this.firestore
       .collection('users')
-      .valueChanges({idField: 'customIdName'})
-      .subscribe((changes:any) => {
+      .valueChanges({ idField: 'customIdName' })
+      .subscribe((changes: any) => {
         this.allUsers = changes;
       })
   }
 
-  openDialog(){
+  openDialog() {
     this.dialog.open(DialogAddUserComponent);
   }
 }

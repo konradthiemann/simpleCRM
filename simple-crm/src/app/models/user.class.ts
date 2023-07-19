@@ -19,7 +19,7 @@ export class User {
         this.zipCode = obj ? obj.zipCode : '';
         this.city = obj ? obj.city : '';
         this.email = obj ? obj.email : '';
-        this.password = obj ? obj.password  : '';
+        this.password = obj ? obj.password : '';
     }
 
     public toJSON() {
@@ -28,7 +28,7 @@ export class User {
             lastName: this.lastName,
             birthDate: this.birthDate,
             street: this.street,
-            zipCode:this.zipCode,
+            zipCode: this.zipCode,
             city: this.city,
             email: this.email,
             password: this.password,

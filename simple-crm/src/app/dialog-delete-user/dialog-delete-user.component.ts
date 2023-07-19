@@ -12,16 +12,16 @@ import { User } from 'src/models/user.class';
 })
 export class DialogDeleteUserComponent {
 
-  user!:User;
+  user!: User;
   loading = false;
   userId: string | undefined;
 
   constructor(
-    public dialogRef: MatDialogRef<DialogDeleteUserComponent>, 
+    public dialogRef: MatDialogRef<DialogDeleteUserComponent>,
     private firestore: AngularFirestore,
     private router: Router) { }
 
-  deleteUser(){
+  deleteUser() {
     this.loading = true;
     this.firestore
       .collection('users')

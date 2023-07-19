@@ -1,47 +1,52 @@
-mat-card-content{
+mat-card-content {
     padding: 0;
 }
 
-.add-user-button{
+.add-user-button {
     position: absolute;
     bottom: 56px;
     right: 56px;
 }
 
-.user-table{
+.user-table {
     width: 100%;
     border-collapse: collapse;
-    tr{
+
+    tr {
         border-bottom: 1px solid rgba($color: #FFFFFF, $alpha: 0.5);
         cursor: pointer;
 
-        &:first-child{
+        &:first-child {
             cursor: unset;
-            &:hover{
+
+            &:hover {
                 background-color: unset;
             }
         }
-        &:last-child{
+
+        &:last-child {
             border-bottom: 0;
         }
-        td{
+
+        td {
             height: 48px;
 
-            &:first-child{
+            &:first-child {
                 padding-left: 16px;
             }
         }
 
-        &:hover{
+        &:hover {
             background-color: rgba(0, 0, 0, 0.1);
         }
     }
-    th{
+
+    th {
         text-align: start;
-        &:first-child{
+
+        &:first-child {
             padding-left: 16px;
         }
     }
-    
-}
 
+}

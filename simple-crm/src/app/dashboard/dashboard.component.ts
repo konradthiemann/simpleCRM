@@ -22,18 +22,18 @@ export class DashboardComponent implements OnInit {
   id: any;
   name: string | undefined;
 
-  latestExpense:any = [
-    {"latestTimestamp": 0},
-    {"latestFirstName": null},
-    {"latestLastName": null},
-    {"latestAmount": 0},
-    {"latestCategory": null},
-    {"latestNote": null},
+  latestExpense: any = [
+    { "latestTimestamp": 0 },
+    { "latestFirstName": null },
+    { "latestLastName": null },
+    { "latestAmount": 0 },
+    { "latestCategory": null },
+    { "latestNote": null },
   ];
 
   expenses: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   income: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  monthAmount:any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  monthAmount: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   expensesJSON: any = [
     [
@@ -67,13 +67,13 @@ export class DashboardComponent implements OnInit {
       type: 'line',
       data: {
         labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-        
+
         datasets: [{
           label: 'expenses in €',
           data: [this.expenses[0], this.expenses[1], this.expenses[2], this.expenses[3], this.expenses[4], this.expenses[5], this.expenses[6], this.expenses[7], this.expenses[8], this.expenses[9], this.expenses[10], this.expenses[11]],
           backgroundColor: [
             'rgba(255, 0, 0, 0.2)',
-          'rgba(0, 255, 0, 0.2)',
+            'rgba(0, 255, 0, 0.2)',
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
@@ -114,25 +114,25 @@ export class DashboardComponent implements OnInit {
         }]
       },
       options: {
-        
-          
+
+
         scales: {
           y: {
             beginAtZero: true,
             ticks: {
-              color: 'white' // Schriftfarbe auf Weiß setzen
+              color: 'white'
             }
           },
           x: {
             ticks: {
-              color: 'white' // Schriftfarbe auf Weiß setzen
+              color: 'white'
             }
           }
         },
         plugins: {
           legend: {
             labels: {
-              color: 'white' // Schriftfarbe in der Legende auf Weiß setzen
+              color: 'white'
             }
           }
         }
@@ -145,7 +145,6 @@ export class DashboardComponent implements OnInit {
     if (id !== undefined) {
       docData(doc(this.firestore, `users/${id}`)).subscribe((user) => {
         this.name = user['firstName'];
-        console.log(this.name);
         this.id = id;
       });
 
@@ -187,7 +186,7 @@ export class DashboardComponent implements OnInit {
         if (currentYear == year && currentMonth == month && transaction == 'expense') {
           this.calcMonthOverview(category, amount)
         }
-        
+
         if (timestamp > this.latestExpense[0]['latestTimestamp'] && transaction == 'expense') {
           this.latestExpense[0]['latestTimestamp'] = timestamp;
           this.latestExpense[0]['latestFirstName'] = firstName;
@@ -203,18 +202,18 @@ export class DashboardComponent implements OnInit {
     // this.loadLatestExpense();
   }
 
-  calcMonthOverview(category:any, amount:any){
+  calcMonthOverview(category: any, amount: any) {
     for (let j = 0; j < this.expensesJSON[0].length; j++) {
       if (this.expensesJSON[0][j]['category'] == category) {
         this.expensesJSON[0][j]['amount'] += +amount;
         this.monthAmount[j] += +amount;
-      }  
+      }
     }
   }
 
-  
 
-  loadLatestExpense(){
+
+  loadLatestExpense() {
 
   }
 
@@ -223,23 +222,23 @@ export class DashboardComponent implements OnInit {
       type: 'pie',
       data: {
         labels: [
-          'Grocery Shopping/Food & Drinks', 
+          'Grocery Shopping/Food & Drinks',
           'Household & Personal Care Products',
-          'Cosmetics', 
-          'Fuel/Gas', 
-          'Online Shopping', 
-          'Dining Out/Entertainment', 
-          'Clothing & Jewelry', 
+          'Cosmetics',
+          'Fuel/Gas',
+          'Online Shopping',
+          'Dining Out/Entertainment',
+          'Clothing & Jewelry',
           'Bills',
-          'Education', 
-          'Home (Decor, Organization, etc.)', 
-          'Hobbies/Accessories, etc.', 
-          'Leisure Activities', 
-          'Gifts', 
-          'Eating Out', 
-          'Health/Medications/...', 
-          'Special Purchases/Expenses', 
-          'Mobility', 
+          'Education',
+          'Home (Decor, Organization, etc.)',
+          'Hobbies/Accessories, etc.',
+          'Leisure Activities',
+          'Gifts',
+          'Eating Out',
+          'Health/Medications/...',
+          'Special Purchases/Expenses',
+          'Mobility',
           'Miscellaneous Expenses'
         ],
         datasets: [{
@@ -270,7 +269,7 @@ export class DashboardComponent implements OnInit {
             'rgb(255, 205, 86)'
           ],
           hoverOffset: 4
-        }] 
+        }]
       },
       options: {
         plugins: {

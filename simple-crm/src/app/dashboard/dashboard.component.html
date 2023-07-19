@@ -10,7 +10,7 @@
 
 <div class="d-flex gap-32 full-width">
     <mat-card class="mt-32  p-16 full-width">
-        <div  id="divChartPie" >
+        <div id="divChartPie">
             <h1>Month overview</h1>
             <canvas class="mt-32 c-white" id="myChartPie"></canvas>
         </div>
@@ -18,7 +18,8 @@
     <mat-card class=" mt-32  p-16 full-width">
         <h1>Latest expense</h1>
         <h2>{{latestExpense[0]['latestTimestamp'] | date : 'yyyy-MM-dd'}}</h2>
-        <h2 class="underline-white">{{latestExpense[0]['latestFirstName']}} {{latestExpense[0]['latestLastName']}}</h2><br>
+        <h2 class="underline-white">{{latestExpense[0]['latestFirstName']}} {{latestExpense[0]['latestLastName']}}</h2>
+        <br>
         <h2>Amount: {{latestExpense[0]['latestAmount']}}€</h2>
         <h2>Category: {{latestExpense[0]['latestCategory']}}</h2>
         <h2>Note: {{latestExpense[0]['latestNote']}}</h2>

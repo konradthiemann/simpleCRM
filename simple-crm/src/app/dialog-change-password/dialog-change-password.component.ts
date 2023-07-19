@@ -27,7 +27,7 @@ export class DialogChangePasswordComponent {
   password: any;
   newPassword: any;
   newPasswordRepeated: any;
-  hide:any;
+  hide: any;
 
   validateInput() {
     if (this.newPassword == this.newPasswordRepeated) {
@@ -53,10 +53,6 @@ export class DialogChangePasswordComponent {
           });
           this.dialogRef.close();
         });
-        // this.firestore
-        //   .collection('finances')
-        //   .doc(docId)
-        //   .delete()
       }
     });
   }

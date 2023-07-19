@@ -28,7 +28,7 @@ export class UserDetailComponent implements OnInit {
   ) { }
 
   expenseTransactions: any = [];
-  incomeTransactions:any = [];
+  incomeTransactions: any = [];
 
   userId: any = '';
   firstName: any;
@@ -45,11 +45,11 @@ export class UserDetailComponent implements OnInit {
     this.subscribeFinance();
   }
 
-  checkForLogIn(){
+  checkForLogIn() {
     let id = this.sharedService.getCurrentUserId();
     if (id == undefined) {
       this.dialog.open(DialogLogInComponent);
-    }     
+    }
   }
 
   getUserId() {
@@ -82,7 +82,7 @@ export class UserDetailComponent implements OnInit {
       if (doc.get('userId') == this.userId && doc.get('transaction') == 'expense') {
         this.expenseTransactions.push(doc.data());
       }
-      if(doc.get('userId') == this.userId && doc.get('transaction') == 'income'){
+      if (doc.get('userId') == this.userId && doc.get('transaction') == 'income') {
         this.incomeTransactions.push(doc.data());
       }
     });
@@ -121,15 +121,13 @@ export class UserDetailComponent implements OnInit {
     dialog.componentInstance.user = new User(this.user.toJSON());
   }
 
-  openNoteDialog(transaction:any) {
+  openNoteDialog(transaction: any) {
     const dialog = this.dialog.open(DialogShowNoteComponent);
     dialog.componentInstance.userId = this.userId;
     dialog.componentInstance.user = transaction;
-    console.log(transaction)
   }
 
-  ChangePassword(user:any){
-    console.log(user);
+  ChangePassword(user: any) {
     const dialog = this.dialog.open(DialogChangePasswordComponent);
     dialog.componentInstance.userId = this.userId;
   }
@@ -144,7 +142,7 @@ export class UserDetailComponent implements OnInit {
         const db = getFirestore();
         const colRef = collection(db, "finances");
         const docsSnap = await getDocs(colRef);
-  
+
         docsSnap.forEach(doc => {
           if (doc.get('creationDate') == expense.creationDate) {
             const docId = doc.id;
@@ -165,7 +163,7 @@ export class UserDetailComponent implements OnInit {
         const db = getFirestore();
         const colRef = collection(db, "finances");
         const docsSnap = await getDocs(colRef);
-  
+
         docsSnap.forEach(doc => {
           if (doc.get('creationDate') == income.creationDate) {
             const docId = doc.id;
