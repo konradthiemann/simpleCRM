@@ -6,6 +6,7 @@
     <mat-menu #menu="matMenu">
         <button (click)="editUserDetail()" mat-menu-item>Edit user</button>
         <button (click)="deleteUser(user)" mat-menu-item>Delete user</button>
+        <button (click)="ChangePassword(user)" mat-menu-item>Change password</button>
     </mat-menu>
 
     <img src="./../../assets/img/profile9-modified.png">
@@ -22,7 +23,6 @@
 </mat-card>
 
 <mat-card class="mt-32">
-
     <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menuAddress">
         <mat-icon>more_vert</mat-icon>
     </button>
@@ -53,7 +53,7 @@
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
-            <tr *ngFor="let income of incomeTransactions" (click)="openNoteDialog()">
+            <tr *ngFor="let income of incomeTransactions" (click)="openNoteDialog(income)">
                 <td>{{income.firstName}} {{income.lastName}}</td>
                 <td>{{income.category}}</td>
                 <td>{{income.amount}}€</td>
@@ -82,7 +82,7 @@
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
-            <tr *ngFor="let expense of expenseTransactions" (click)="openNoteDialog()">
+            <tr *ngFor="let expense of expenseTransactions" (click)="openNoteDialog(expense)">
                 <td>{{expense.firstName}} {{expense.lastName}}</td>
                 <td>{{expense.category}}</td>
                 <td>{{expense.amount}}€</td>
@@ -97,7 +97,7 @@
 </mat-card>
 
 <button *ngIf="user.email == currentUserEmail" (click)="openAddFinanceDialog()" class="add-finance-button" mat-fab
-    color="primary" matTooltip="Add expense" matTooltipPosition="above">
+    color="primary" matTooltip="Add finance" matTooltipPosition="above">
     <mat-icon>add</mat-icon>
 </button>
 

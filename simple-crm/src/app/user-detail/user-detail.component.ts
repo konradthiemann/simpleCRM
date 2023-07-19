@@ -10,6 +10,8 @@ import { collection, getDocs, getFirestore } from '@angular/fire/firestore';
 import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
 import { SharedService } from '../shared.service';
 import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
+import { DialogChangePasswordComponent } from '../dialog-change-password/dialog-change-password.component';
+import { DialogShowNoteComponent } from '../dialog-show-note/dialog-show-note.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -119,8 +121,16 @@ export class UserDetailComponent implements OnInit {
     dialog.componentInstance.user = new User(this.user.toJSON());
   }
 
-  openNoteDialog() {
+  openNoteDialog(transaction:any) {
+    const dialog = this.dialog.open(DialogShowNoteComponent);
+    dialog.componentInstance.userId = this.userId;
+    console.log(transaction)
+  }
 
+  ChangePassword(user:any){
+    console.log(user);
+    const dialog = this.dialog.open(DialogChangePasswordComponent);
+    dialog.componentInstance.userId = this.userId;
   }
 
   editFinance() {

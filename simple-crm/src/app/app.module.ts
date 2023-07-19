@@ -42,6 +42,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-forgot-password.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DialogChangePasswordComponent } from './dialog-change-password/dialog-change-password.component';
+import { DialogChangePasswordSuccessfulComponent } from './dialog-change-password-successful/dialog-change-password-successful.component';
+import { DialogShowNoteComponent } from './dialog-show-note/dialog-show-note.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +63,9 @@ import { HttpClientModule } from '@angular/common/http';
     DialogAddFinanceComponent,
     DialogAddFinanceSuccessfulComponent,
     DialogForgotPasswordComponent,
+    DialogChangePasswordComponent,
+    DialogChangePasswordSuccessfulComponent,
+    DialogShowNoteComponent,
 
   ],
   imports: [
@@ -89,7 +95,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSelectModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

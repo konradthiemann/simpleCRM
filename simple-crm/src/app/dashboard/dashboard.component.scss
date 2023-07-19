@@ -4,6 +4,15 @@ mat-card{
     }
 }
 
+#divChart{
+    height: 600px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 40px;
+}
+
 #myChartPie{
     height: 600px !important;
     width: 600px !important;

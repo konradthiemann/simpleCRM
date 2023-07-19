@@ -21,9 +21,13 @@
               </mat-form-field>
         </div>
 
+        <div>
+            <p class="c-pink" *ngIf="noMatch">wrong email or password</p> 
+        </div>
+
         <div mat-dialog-actions>
-            <button mat-button (click)="dialogRef.close()">Cancel</button>
-            <button mat-button (click)="logIn(null, null)" [mat-dialog-close]="" cdkFocusInitial>Log in</button>
+            <!-- <button mat-button (click)="dialogRef.close()">Cancel</button> -->
+            <button mat-button (click)="logIn(null, null)" cdkFocusInitial>Log in</button>
             <button mat-button (click)="logIn('max-mustermann@muster.de', 1)" [mat-dialog-close]=""
                 cdkFocusInitial>Guest</button>
         </div>

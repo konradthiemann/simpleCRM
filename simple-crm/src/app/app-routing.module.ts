@@ -10,6 +10,7 @@ import { DialogLogInComponent } from './dialog-log-in/dialog-log-in.component';
 const routes: Routes = [
   {path:'', component: DashboardComponent},
   {path:'dashboard/:id', component: DashboardComponent},
+  {path:'dashboard', component: DashboardComponent},
   {path:'user', component: UserComponent},
   {path:'user/:id', component: UserDetailComponent},
   {path:'legal-notice', component: LegalNoticeComponent},

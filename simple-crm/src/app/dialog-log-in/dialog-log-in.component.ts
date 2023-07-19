@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { collection, getCountFromServer, getFirestore, getDocs, doc, query, where } from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import { Router,NavigationEnd  } from '@angular/router';
 import { DialogLogInSuccessfulComponent } from '../dialog-log-in-successful/dialog-log-in-successful.component';
 import { SharedService } from '../shared.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DialogForgotPasswordComponent } from '../dialog-forgot-password/dialog-forgot-password.component';
+import { filter } from 'rxjs/operators';
 
 
 
@@ -15,29 +16,32 @@ import { DialogForgotPasswordComponent } from '../dialog-forgot-password/dialog-
   templateUrl: './dialog-log-in.component.html',
   styleUrls: ['./dialog-log-in.component.scss']
 })
-export class DialogLogInComponent implements OnInit{
+export class DialogLogInComponent implements OnInit {
 
   constructor(
     private firestore: AngularFirestore,
     public dialogRef: MatDialogRef<DialogLogInComponent>,
     private router: Router,
     public dialog: MatDialog,
-    private sharedService: SharedService
+    private sharedService: SharedService,
   ) {
     dialogRef.disableClose = true;
-  }
-
-  ngOnInit(): void {
-    this.loadLocalStorage();
+    
   }
 
   loading = false;
   email: any;
   password: any;
-  hide:any;
+  hide: any;
   passwordSaved: boolean = false;
+  currentRoute:any;
+  noMatch:boolean = false;
 
-  loadLocalStorage(){
+  ngOnInit(): void {
+    this.loadLocalStorage();
+  }
+
+  loadLocalStorage() {
     this.email = localStorage.getItem('email');
     this.password = localStorage.getItem('password');
     if (localStorage.getItem('checkbox') == 'true') {
@@ -61,27 +65,28 @@ export class DialogLogInComponent implements OnInit{
         });
         this.router.navigate(['/dashboard', doc.id]);
         this.loading = false;
+        this.noMatch = false;
         this.dialogRef.close();
-      } else {
-
-        // console.log('your registration went wrong',doc.get('email'), this.email, doc.get('password'),this.password)
       }
     })
+      this.loading = false;
+      this.noMatch = true;
+    
   }
 
-  checkRememberMe(){
+  checkRememberMe() {
     if (this.passwordSaved) {
-      localStorage.setItem('email',this.email);
+      localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password);
       localStorage.setItem('checkbox', 'true');
-    }else{
+    } else {
       localStorage.removeItem('email');
       localStorage.removeItem('password');
       localStorage.removeItem('checkbox');
     }
   }
 
-  forgotPassword(){
+  forgotPassword() {
     this.dialog.open(DialogForgotPasswordComponent);
   }
 }

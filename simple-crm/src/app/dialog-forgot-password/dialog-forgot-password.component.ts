@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class DialogForgotPasswordComponent {
 
   post = {
-    endPoint: 'https://konrad-thiemann.de/send_mail.php/',
+    endPoint: 'https://simple-crm.konrad-thiemann.de/send_mail.php/',
     body: (payload: any) => JSON.stringify(payload),
     options: {
       headers: {
@@ -38,17 +38,15 @@ export class DialogForgotPasswordComponent {
   loading:any;
   email:any;
   emailSent:boolean =  false;
-
-  // sendNewPassword(){
-  //   console.log(this.email);
-  //   this.validateEmail();
-  // }
-
+  
   onSubmit(ngForm: any) {
-
+    
+    const randomPassword = this.randomPasswordGenerator();
+    console.log(this.contactForm.valid)
     if (this.contactForm.valid) {
       let data = {
-        email: this.contactForm.value.email,
+        recipient: this.contactForm.value.email,
+        password: `${randomPassword}`,
       }
       this.http
         .post(this.post.endPoint, data)
@@ -80,16 +78,16 @@ export class DialogForgotPasswordComponent {
     }
   }
 
-  // async validateEmail(){
-  //   const db = getFirestore();
-  //   const colRef = collection(db, "users");
-  //   const docsSnap = await getDocs(colRef);
+  randomPasswordGenerator(){
+    let chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let passwordLength = 12;
+    let password = "";
+   
+    for (let i = 0; i <= passwordLength; i++) {
+      let randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber +1);
+     }
 
-  //   docsSnap.forEach(doc => {
-  //     let email = doc.get('email');
-  //     if(email == this.email){
-
-  //     }
-  //   });
-  // }
+     return password;
+  }
 }

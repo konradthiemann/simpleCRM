@@ -40,7 +40,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .full-width{
-    width: 100%;
+    width: 100% !important;
 }
 
 .pin-right-upper-corner{
@@ -56,6 +56,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .c-white{
     color: white !important;
+}
+
+.c-pink{
+    color: #ff0000 !important;
 }
 
 .underline-white{
