@@ -8,6 +8,7 @@ export class Finance {
     category: string | undefined;
     amount: number | undefined;
     note:string | undefined;
+    transaction:string | undefined;
 
     constructor(obj?: any) {
         this.userId = obj ? obj.userId : '';
@@ -17,6 +18,7 @@ export class Finance {
         this.category = obj ? obj.category : '';
         this.amount = obj ? obj.amount : '';
         this.note = obj ? obj.note : '';
+        this.transaction = obj ? obj.transaction : '';
     }
 
     public toJSON() {
@@ -28,6 +30,7 @@ export class Finance {
             category: this.category,
             amount:this.amount,
             note:this.note,
+            transaction:this.transaction,
         }
     }
 }

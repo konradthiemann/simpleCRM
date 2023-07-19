@@ -41,36 +41,67 @@
 
 <mat-card class="mt-32">
     <mat-card-header>
-        <mat-card-title>Finances</mat-card-title>
+        <mat-card-title>
+            <h1>Incomes</h1>
+        </mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <table class="user-table">
-            <tr >
+            <tr>
                 <th>Name</th>
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
-            <tr *ngFor="let finance of allFinances" (click)="openNoteDialog()">
-                <td>{{finance.firstName}} {{finance.lastName}}</td>
-                <td>{{finance.category}}</td>
-                <td>{{finance.amount}}€</td>
-                <td>{{finance.creationDate | date : 'yyyy-MM-dd'}}</td>
+            <tr *ngFor="let income of incomeTransactions" (click)="openNoteDialog()">
+                <td>{{income.firstName}} {{income.lastName}}</td>
+                <td>{{income.category}}</td>
+                <td>{{income.amount}}€</td>
+                <td>{{income.creationDate | date : 'yyyy-MM-dd'}}</td>
 
-                <button mat-icon-button class="pin-right" [matMenuTriggerFor]="menuAddress">
-                    <mat-icon>more_vert</mat-icon>
+                <button mat-mini-fab (click)="deleteIncome(income)" class="delete-button pin-right">
+                    <mat-icon>delete</mat-icon>
                 </button>
-                <mat-menu #menuAddress="matMenu">
-                    <button (click)="editFinance()" mat-menu-item>Edit</button>
-                    <button (click)="deleteFinance(finance)" mat-menu-item>delete</button>
-                </mat-menu>
 
             </tr>
         </table>
     </mat-card-content>
 </mat-card>
 
-<button *ngIf="user.email == currentUserEmail" (click)="openAddFinanceDialog()" class="add-finance-button" mat-fab color="primary" matTooltip="Add user"
-    matTooltipPosition="above">
+<mat-card class="mt-32">
+    <mat-card-header>
+        <mat-card-title>
+            <h1>Expenses</h1>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <table class="user-table">
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+            <tr *ngFor="let expense of expenseTransactions" (click)="openNoteDialog()">
+                <td>{{expense.firstName}} {{expense.lastName}}</td>
+                <td>{{expense.category}}</td>
+                <td>{{expense.amount}}€</td>
+                <td>{{expense.creationDate | date : 'yyyy-MM-dd'}}</td>
+
+                <button mat-mini-fab (click)="deleteExpense(expense)" class="delete-button pin-right">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+
+<button *ngIf="user.email == currentUserEmail" (click)="openAddFinanceDialog()" class="add-finance-button" mat-fab
+    color="primary" matTooltip="Add expense" matTooltipPosition="above">
     <mat-icon>add</mat-icon>
 </button>
+
+<!-- <button *ngIf="user.email == currentUserEmail" (click)="openAddIncomeDialog()" class="add-income-button" mat-fab color="warn" matTooltip="Add income"
+    matTooltipPosition="above">
+    <mat-icon>add</mat-icon>
+</button> -->

@@ -25,13 +25,15 @@ export class UserDetailComponent implements OnInit {
     public sharedService: SharedService,
   ) { }
 
-  allFinances: any = [];
+  expenseTransactions: any = [];
+  incomeTransactions:any = [];
 
   userId: any = '';
   firstName: any;
   lastName: any;
   user: User = new User;
   currentUserEmail: any;
+
 
   ngOnInit(): void {
     this.checkForLogIn();
@@ -71,17 +73,20 @@ export class UserDetailComponent implements OnInit {
     const colRef = collection(db, "finances");
     const docsSnap = await getDocs(colRef);
 
-    this.allFinances = [];
+    this.expenseTransactions = [];
+    this.incomeTransactions = [];
 
     docsSnap.forEach(doc => {
-      if (doc.get('userId') == this.userId) {
-        this.allFinances.push(doc.data());
+      if (doc.get('userId') == this.userId && doc.get('transaction') == 'expense') {
+        this.expenseTransactions.push(doc.data());
+      }
+      if(doc.get('userId') == this.userId && doc.get('transaction') == 'income'){
+        this.incomeTransactions.push(doc.data());
       }
     });
   }
 
   subscribeFinance() {
-
     this.firestore
       .collection('finances')
       .valueChanges()
@@ -122,18 +127,17 @@ export class UserDetailComponent implements OnInit {
 
   }
 
-  async deleteFinance(finance: any) {
-    for (let i = 0; i < this.allFinances.length; i++) {
-
-      if (this.allFinances[i] === finance) {
+  async deleteExpense(expense: any) {
+    for (let i = 0; i < this.expenseTransactions.length; i++) {
+      if (this.expenseTransactions[i] === expense) {
         const db = getFirestore();
         const colRef = collection(db, "finances");
         const docsSnap = await getDocs(colRef);
-
+  
         docsSnap.forEach(doc => {
-          if (doc.get('creationDate') == finance.creationDate) {
+          if (doc.get('creationDate') == expense.creationDate) {
             const docId = doc.id;
-            this.allFinances.splice(i, 1);
+            this.expenseTransactions.splice(i, 1);
             this.firestore
               .collection('finances')
               .doc(docId)
@@ -141,7 +145,27 @@ export class UserDetailComponent implements OnInit {
           }
         });
       }
+    }
+  }
 
+  async deleteIncome(income: any) {
+    for (let i = 0; i < this.incomeTransactions.length; i++) {
+      if (this.incomeTransactions[i] === income) {
+        const db = getFirestore();
+        const colRef = collection(db, "finances");
+        const docsSnap = await getDocs(colRef);
+  
+        docsSnap.forEach(doc => {
+          if (doc.get('creationDate') == income.creationDate) {
+            const docId = doc.id;
+            this.incomeTransactions.splice(i, 1);
+            this.firestore
+              .collection('finances')
+              .doc(docId)
+              .delete()
+          }
+        });
+      }
     }
   }
 }

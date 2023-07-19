@@ -55,7 +55,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .c-white{
-    color: white;
+    color: white !important;
+}
+
+.underline-white{
+    border-bottom: 1px solid white ;
 }
 
 input::-webkit-outer-spin-button,

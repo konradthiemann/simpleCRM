@@ -22,9 +22,18 @@ export class DashboardComponent implements OnInit {
   id: any;
   name: string | undefined;
 
+  latestExpense:any = [
+    {"latestTimestamp": 0},
+    {"latestFirstName": null},
+    {"latestLastName": null},
+    {"latestAmount": 0},
+    {"latestCategory": null},
+    {"latestNote": null},
+  ];
+
   expenses: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   income: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  monthAmount:any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  monthAmount:any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   expensesJSON: any = [
     [
@@ -35,6 +44,7 @@ export class DashboardComponent implements OnInit {
       { "category": "Online Shopping", "amount": 0 },
       { "category": "Dining Out/Entertainment", "amount": 0 },
       { "category": "Clothing & Jewelry", "amount": 0 },
+      { "category": "Bills", "amount": 0 },
       { "category": "Education", "amount": 0 },
       { "category": "Home (Decor, Organization, etc.)", "amount": 0 },
       { "category": "Hobbies/Accessories, etc.", "amount": 0 },
@@ -50,7 +60,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadContent();
-
   }
 
   loadTestChart() {
@@ -58,10 +67,13 @@ export class DashboardComponent implements OnInit {
       type: 'line',
       data: {
         labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        
         datasets: [{
           label: 'expenses in €',
           data: [this.expenses[0], this.expenses[1], this.expenses[2], this.expenses[3], this.expenses[4], this.expenses[5], this.expenses[6], this.expenses[7], this.expenses[8], this.expenses[9], this.expenses[10], this.expenses[11]],
           backgroundColor: [
+            'rgba(255, 0, 0, 0.2)', // Neue Hintergrundfarbe für Einnahmen (rot mit geringer Deckkraft)
+          'rgba(0, 255, 0, 0.2)',
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
             'rgba(255, 206, 86, 0.2)',
@@ -102,9 +114,26 @@ export class DashboardComponent implements OnInit {
         }]
       },
       options: {
+        
+          
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              color: 'white' // Schriftfarbe auf Weiß setzen
+            }
+          },
+          x: {
+            ticks: {
+              color: 'white' // Schriftfarbe auf Weiß setzen
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: 'white' // Schriftfarbe in der Legende auf Weiß setzen
+            }
           }
         }
       }
@@ -121,7 +150,7 @@ export class DashboardComponent implements OnInit {
       });
 
       this.calcExpenses();
-      this.calcIncome();
+      // this.calcIncome();
     } else {
       this.dialog.open(DialogLogInComponent);
     }
@@ -140,31 +169,52 @@ export class DashboardComponent implements OnInit {
         let year = new Date(timestamp).getFullYear();
         let currentYear = new Date().getFullYear();
         let currentMonth = new Date().getMonth();
+        let firstName = doc.get('firstName');
+        let lastName = doc.get('lastName');
         let amount = doc.get('amount');
         let category = doc.get('category');
+        let note = doc.get('note');
+        let transaction = doc.get('transaction');
 
-        if (i == month && year == currentYear) {
+        if (i == month && year == currentYear && transaction == 'expense') {
           this.expenses[i] += +amount;
         }
-        // console.log(currentYear, year, '|', month, currentMonth);
-        if (currentYear == year && currentMonth == month) {
-          for (let j = 0; j < this.expensesJSON[0].length; j++) {
-            console.log(this.expensesJSON[0][j]);
-            if (this.expensesJSON[0][j]['category'] == category) {
-              this.expensesJSON[0][j]['amount'] += +amount;
-              this.monthAmount[j] += +amount;
-              // console.log(this.expensesJSON[j][j]['category']);
-            }
-            
-          }
+
+        if (i == month && year == currentYear && transaction == 'income') {
+          this.income[i] += +amount;
+        }
+
+        if (currentYear == year && currentMonth == month && transaction == 'expense') {
+          this.calcMonthOverview(category, amount)
+        }
+        
+        if (timestamp > this.latestExpense[0]['latestTimestamp'] && transaction == 'expense') {
+          this.latestExpense[0]['latestTimestamp'] = timestamp;
+          this.latestExpense[0]['latestFirstName'] = firstName;
+          this.latestExpense[0]['latestLastName'] = lastName;
+          this.latestExpense[0]['latestAmount'] = amount;
+          this.latestExpense[0]['latestCategory'] = category;
+          this.latestExpense[0]['latestNote'] = note;
         }
       });
     }
     this.loadTestChart();
     this.loadPieChart();
+    // this.loadLatestExpense();
   }
 
-  calcMonthOverview(){
+  calcMonthOverview(category:any, amount:any){
+    for (let j = 0; j < this.expensesJSON[0].length; j++) {
+      if (this.expensesJSON[0][j]['category'] == category) {
+        this.expensesJSON[0][j]['amount'] += +amount;
+        this.monthAmount[j] += +amount;
+      }  
+    }
+  }
+
+  
+
+  loadLatestExpense(){
 
   }
 
@@ -180,6 +230,7 @@ export class DashboardComponent implements OnInit {
           'Online Shopping', 
           'Dining Out/Entertainment', 
           'Clothing & Jewelry', 
+          'Bills',
           'Education', 
           'Home (Decor, Organization, etc.)', 
           'Hobbies/Accessories, etc.', 
@@ -211,6 +262,7 @@ export class DashboardComponent implements OnInit {
             this.monthAmount[14],
             this.monthAmount[15],
             this.monthAmount[16],
+            this.monthAmount[17],
           ],
           backgroundColor: [
             'rgb(255, 99, 132)',
@@ -218,7 +270,16 @@ export class DashboardComponent implements OnInit {
             'rgb(255, 205, 86)'
           ],
           hoverOffset: 4
-        }]
+        }] 
+      },
+      options: {
+        plugins: {
+          legend: {
+            labels: {
+              color: 'white'
+            }
+          }
+        }
       }
     });
 

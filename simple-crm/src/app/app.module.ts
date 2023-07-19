@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -38,7 +38,10 @@ import { DialogLogInSuccessfulComponent } from './dialog-log-in-successful/dialo
 import { SharedService } from './shared.service';
 import { DialogAddFinanceComponent } from './dialog-add-finance/dialog-add-finance.component';
 import { DialogAddFinanceSuccessfulComponent } from './dialog-add-finance-successful/dialog-add-finance-successful.component';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-forgot-password.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,8 @@ import { DialogAddFinanceSuccessfulComponent } from './dialog-add-finance-succes
     DialogLogInSuccessfulComponent,
     DialogAddFinanceComponent,
     DialogAddFinanceSuccessfulComponent,
+    DialogForgotPasswordComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -81,6 +86,10 @@ import { DialogAddFinanceSuccessfulComponent } from './dialog-add-finance-succes
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     MatMenuModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

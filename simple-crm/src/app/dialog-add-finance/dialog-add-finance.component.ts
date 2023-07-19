@@ -29,6 +29,7 @@ export class DialogAddFinanceComponent {
   category: any;
   note: any = '';
   userId:any;
+  transaction:any;
   // firstName: string | undefined;
   // lastName: string | undefined;
   user!: User;
@@ -39,6 +40,7 @@ export class DialogAddFinanceComponent {
     this.finance.category = this.category;
     this.finance.userId = this.userId;
     this.finance.note = this.note;
+    this.finance.transaction = this.transaction;
     this.finance.firstName = this.sharedService.getCurrentUserFirstName();
     this.finance.lastName = this.sharedService.getCurrentUserLastName();
 
