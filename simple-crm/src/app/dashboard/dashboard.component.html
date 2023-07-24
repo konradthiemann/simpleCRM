@@ -1,27 +1,74 @@
 <mat-card class="p-16">
     <h1>Hello {{name}}</h1>
 </mat-card>
-<mat-card class="mt-32 p-16">
-    <div id="divChart">
-        <h1>Year overview</h1>
-        <canvas id="myChart"></canvas>
-    </div>
-</mat-card>
 
-<div class="d-flex gap-32 full-width">
-    <mat-card class="mt-32  p-16 full-width">
+<div class="d-flex gap-32 finance-container">
+    <mat-card class="mt-32 p-16 half-width">
+        <div id="divChart">
+            <h1>Year overview</h1>
+            <canvas id="myChart"></canvas>
+        </div>
+    </mat-card>
+    <mat-card class="mt-32  p-16 ">
         <div id="divChartPie">
-            <h1>Month overview</h1>
+            <h1>Expenses this month</h1>
             <canvas class="mt-32 c-white" id="myChartPie"></canvas>
         </div>
     </mat-card>
-    <mat-card class=" mt-32  p-16 full-width">
-        <h1>Latest expense</h1>
-        <h2>{{latestExpense[0]['latestTimestamp'] | date : 'yyyy-MM-dd'}}</h2>
-        <h2 class="underline-white">{{latestExpense[0]['latestFirstName']}} {{latestExpense[0]['latestLastName']}}</h2>
-        <br>
-        <h2>Amount: {{latestExpense[0]['latestAmount']}}€</h2>
-        <h2>Category: {{latestExpense[0]['latestCategory']}}</h2>
-        <h2>Note: {{latestExpense[0]['latestNote']}}</h2>
+    <mat-card class=" mt-32  p-16">
+
+        <h1 class="underline-white">Latest expense</h1>
+
+        <mat-card class=" mt-8  p-16">
+            <h2>{{latestExpense[0]['latestTimestamp'] | date : 'yyyy-MM-dd'}}</h2>
+            <h2>{{latestExpense[0]['latestFirstName']}} {{latestExpense[0]['latestLastName']}}</h2>
+        </mat-card>
+        <mat-card class=" mt-8  p-16">
+            <h2>Amount: </h2>
+            <h2>{{latestExpense[0]['latestAmount']}}€</h2>
+        </mat-card>
+        <mat-card class=" mt-8  p-16">
+            <h2>Category: </h2>
+            <h2>{{latestExpense[0]['latestCategory']}}</h2>
+        </mat-card>
+        <mat-card class=" mt-8  p-16">
+            <h2>Note: </h2>
+            <h2>{{latestExpense[0]['latestNote']}}</h2>
+        </mat-card>
     </mat-card>
+</div>
+
+<div class="full-width button-container">
+    <button  (click)="openAddFinanceDialog()" class="add-finance-button mt-32" mat-fab
+        color="primary" matTooltip="Add finance" matTooltipPosition="above">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+
+<mat-card class=" mt-32  p-16">
+    <h1>Blockchain</h1>
+    <h1 *ngIf="test == ('1' || '2')"> test</h1>
+</mat-card>
+
+<div class="d-flex full-width gap-32" >
+
+    <mat-card class="mt-32  p-16 half-width">
+        <div id="divChartBlockchain">
+            <h1>Current value</h1>
+            <canvas class="mt-32 c-white max-width" id="myBlockchainChart"></canvas>
+        </div>
+    </mat-card>
+
+    <mat-card class="mt-32  p-16 half-width">
+        <div class="chart-history-container">
+            <h1>History</h1>
+            <mat-card class="mt-32  p-16 ">
+                <div id="divChartBlockchainHistory">
+                    <canvas class="mt-32 c-white max-width" id="myBlockchainChartHistory"></canvas>
+                </div>
+            </mat-card>
+        </div>
+    </mat-card>
+        
 </div>

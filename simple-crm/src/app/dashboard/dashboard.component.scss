@@ -6,6 +6,10 @@ mat-card {
     }
 }
 
+.finance-container{
+    justify-content: space-between;
+}
+
 #divChart {
     height: 600px;
     width: 100%;
@@ -13,6 +17,11 @@ mat-card {
     display: flex;
     flex-direction: column;
     padding-bottom: 40px;
+}
+
+#myChart{
+    height: 100% !important;
+    width: 600px !important;
 }
 
 #myChartPie {
@@ -25,4 +34,14 @@ mat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#myBlockchainChart{
+    width: 100%;
+    height: 600px;
 }

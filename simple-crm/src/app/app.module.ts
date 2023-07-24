@@ -45,6 +45,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogChangePasswordComponent } from './dialog-change-password/dialog-change-password.component';
 import { DialogChangePasswordSuccessfulComponent } from './dialog-change-password-successful/dialog-change-password-successful.component';
 import { DialogShowNoteComponent } from './dialog-show-note/dialog-show-note.component';
+import { LogInComponent } from './log-in/log-in.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { DialogShowNoteComponent } from './dialog-show-note/dialog-show-note.com
     DialogChangePasswordComponent,
     DialogChangePasswordSuccessfulComponent,
     DialogShowNoteComponent,
+    LogInComponent,
 
   ],
   imports: [
