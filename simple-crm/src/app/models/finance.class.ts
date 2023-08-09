@@ -9,6 +9,7 @@ export class Finance {
     amount: number | undefined;
     note: string | undefined;
     transaction: string | undefined;
+    date: any | undefined;
 
     constructor(obj?: any) {
         this.userId = obj ? obj.userId : '';
@@ -19,6 +20,7 @@ export class Finance {
         this.amount = obj ? obj.amount : '';
         this.note = obj ? obj.note : '';
         this.transaction = obj ? obj.transaction : '';
+        this.date = obj ? obj.transaction : '';
     }
 
     public toJSON() {
@@ -31,6 +33,7 @@ export class Finance {
             amount: this.amount,
             note: this.note,
             transaction: this.transaction,
+            date: this.date,
         }
     }
 }

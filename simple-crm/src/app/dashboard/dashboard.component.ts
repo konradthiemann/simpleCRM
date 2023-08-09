@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../shared.service';
 import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
-import { Firestore, collection, docData, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, docData, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { Chart, registerables } from 'chart.js';
 import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
 import { User } from '../models/user.class';
@@ -19,18 +19,23 @@ Chart.register(...registerables);
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute, private sharedService: SharedService, private firestore: Firestore, private router: Router,) { }
+  constructor(
+    public dialog: MatDialog, 
+    private route: ActivatedRoute, 
+    private sharedService: SharedService, 
+    private firestore: Firestore, 
+    private router: Router,
 
-  ngOnInit(): void {
+    ) { }
+
+   ngOnInit(): void {
     this.loadContent();
     this.createBlockchainJson();
     this.createBlockchainHistoryJson();
-
   }
 
 
   test: any = '2';
-
 
   db = this.firestore;
   id: any;
@@ -65,6 +70,7 @@ export class DashboardComponent implements OnInit {
   blockchainHistoryUsdCoin:any;
 
   latestExpense: any = [
+    { "latestDateTimestamp": 0 },
     { "latestTimestamp": 0 },
     { "latestFirstName": null },
     { "latestLastName": null },
@@ -109,8 +115,12 @@ export class DashboardComponent implements OnInit {
         this.name = user['firstName'];
         this.id = id;
       });
-      this.calcExpenses();
 
+      onSnapshot(collection(this.firestore, `finances`), () => {
+        this.calcExpenses();
+      });
+
+      this.calcExpenses();
     } else {
       this.router.navigate(['/log-in']);
     }
@@ -123,6 +133,7 @@ export class DashboardComponent implements OnInit {
 
     for (let i = 0; i < 11; i++) {
       docsSnap.forEach(doc => {
+        let dateTimestamp = doc.get('date');
         let timestamp = doc.get('creationDate');
         let month = new Date(timestamp).getMonth();
         let year = new Date(timestamp).getFullYear();
@@ -147,7 +158,8 @@ export class DashboardComponent implements OnInit {
           this.calcMonthOverview(category, amount)
         }
 
-        if (timestamp > this.latestExpense[0]['latestTimestamp'] && transaction == 'expense') {
+        if (dateTimestamp > this.latestExpense[0]['latestDateTimestamp'] && transaction == 'expense') {
+          this.latestExpense[0]['latestDateTimestamp'] = dateTimestamp;
           this.latestExpense[0]['latestTimestamp'] = timestamp;
           this.latestExpense[0]['latestFirstName'] = firstName;
           this.latestExpense[0]['latestLastName'] = lastName;
@@ -159,7 +171,7 @@ export class DashboardComponent implements OnInit {
     }
     this.loadTestChart();
     this.loadPieChart();
-    this.loadBlockchainChartHistory();
+    
 
     // this.loadLatestExpense();
   }
@@ -177,8 +189,13 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  pieChart:any
+
   loadPieChart() {
-    new Chart("myChartPie", {
+    if (this.pieChart != undefined) {
+      this.pieChart.destroy();
+    }
+    this.pieChart = new Chart("myChartPie", {
       type: 'pie',
       data: {
         labels: [
@@ -243,19 +260,20 @@ export class DashboardComponent implements OnInit {
           y: {
             beginAtZero: true,
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           },
           x: {
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           }
         },
+        responsive: true,
         plugins: {
           legend: {
             labels: {
-              color: 'white'
+              color: 'black'
             }
           }
         }
@@ -268,8 +286,13 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  myChart:any ;
+
   loadTestChart() {
-    var myChart = new Chart("myChart", {
+    if (this.myChart != undefined) {
+      this.myChart.destroy();
+    }
+    this.myChart = new Chart("myChart", {
       type: 'bar',
       data: {
         labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -302,27 +325,27 @@ export class DashboardComponent implements OnInit {
           y: {
             beginAtZero: true,
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           },
           x: {
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           }
         },
-        indexAxis: 'y',
+        // indexAxis: 'y',
         elements: {
           bar: {
             borderWidth: 2,
 
           }
         },
-        responsive: false,
+        responsive: true,
         plugins: {
           legend: {
             labels: {
-              color: 'white'
+              color: 'black'
             },
             position: 'top',
           },
@@ -349,6 +372,7 @@ export class DashboardComponent implements OnInit {
     this.blockchainPrices[3] = this.blockchainData['binancecoin']['eur'];
     this.blockchainPrices[4] = this.blockchainData['usd-coin']['eur'];
     this.loadBlockchainChart();
+    
   }
 
   async createBlockchainHistoryJson(){
@@ -381,6 +405,7 @@ export class DashboardComponent implements OnInit {
     for (let i = 0; i < history.length; i++) {
       this.getSingleHistoryDataSet(history[i], i);
     }
+    this.loadBlockchainChartHistory();
   }
 
   blockchainHistoryData:any = [
@@ -466,12 +491,12 @@ export class DashboardComponent implements OnInit {
           y: {
             beginAtZero: true,
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           },
           x: {
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           }
         },
@@ -482,11 +507,11 @@ export class DashboardComponent implements OnInit {
 
           }
         },
-        responsive: false,
+        responsive: true,
         plugins: {
           legend: {
             labels: {
-              color: 'white'
+              color: 'black'
             },
             position: 'top',
           },
@@ -558,12 +583,12 @@ export class DashboardComponent implements OnInit {
           y: {
             beginAtZero: true,
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           },
           x: {
             ticks: {
-              color: 'white'
+              color: 'black'
             }
           }
         },
@@ -571,7 +596,7 @@ export class DashboardComponent implements OnInit {
         plugins: {
           legend: {
             labels: {
-              color: 'white'
+              color: 'black'
             },
             position: 'top',
           }

@@ -3,39 +3,44 @@
 </mat-card>
 
 <div class="d-flex gap-32 finance-container">
-    <mat-card class="mt-32 p-16 half-width">
+
+    <mat-card class="mt-32 p-16 year-overview" >
         <div id="divChart">
             <h1>Year overview</h1>
             <canvas id="myChart"></canvas>
         </div>
     </mat-card>
-    <mat-card class="mt-32  p-16 ">
-        <div id="divChartPie">
-            <h1>Expenses this month</h1>
-            <canvas class="mt-32 c-white" id="myChartPie"></canvas>
-        </div>
-    </mat-card>
-    <mat-card class=" mt-32  p-16">
 
-        <h1 class="underline-white">Latest expense</h1>
-
-        <mat-card class=" mt-8  p-16">
-            <h2>{{latestExpense[0]['latestTimestamp'] | date : 'yyyy-MM-dd'}}</h2>
-            <h2>{{latestExpense[0]['latestFirstName']}} {{latestExpense[0]['latestLastName']}}</h2>
+    <div class="d-flex gap-32 top-right-container">
+        <mat-card class="mt-32  p-16 chart-pie">
+            <div id="divChartPie">
+                <h1>Expenses this month</h1>
+                <canvas class="mt-32" id="myChartPie"></canvas>
+            </div>
         </mat-card>
-        <mat-card class=" mt-8  p-16">
-            <h2>Amount: </h2>
-            <h2>{{latestExpense[0]['latestAmount']}}€</h2>
+    
+        <mat-card class=" mt-32  p-16 latest-expense">
+            <h1 class="underline-white">Latest expense</h1>
+            <div class="inner-latest-expense">
+                <mat-card class=" mt-8  p-16 full-width">
+                    <h2>{{latestExpense[0]['latestTimestamp'] | date : 'yyyy-MM-dd'}}</h2>
+                    <h2>{{latestExpense[0]['latestFirstName']}} {{latestExpense[0]['latestLastName']}}</h2>
+                </mat-card>
+                <mat-card class=" mt-8  p-16 full-width">
+                    <h2>Amount: </h2>
+                    <h2>{{latestExpense[0]['latestAmount']}}€</h2>
+                </mat-card>
+                <mat-card class=" mt-8  p-16 full-width">
+                    <h2>Category: </h2>
+                    <h2>{{latestExpense[0]['latestCategory']}}</h2>
+                </mat-card>
+                <mat-card class=" mt-8  p-16 full-width">
+                    <h2>Note: </h2>
+                    <h2>{{latestExpense[0]['latestNote']}}</h2>
+                </mat-card>
+            </div>
         </mat-card>
-        <mat-card class=" mt-8  p-16">
-            <h2>Category: </h2>
-            <h2>{{latestExpense[0]['latestCategory']}}</h2>
-        </mat-card>
-        <mat-card class=" mt-8  p-16">
-            <h2>Note: </h2>
-            <h2>{{latestExpense[0]['latestNote']}}</h2>
-        </mat-card>
-    </mat-card>
+    </div>
 </div>
 
 <div class="full-width button-container">
@@ -51,16 +56,16 @@
     <h1 *ngIf="test == ('1' || '2')"> test</h1>
 </mat-card>
 
-<div class="d-flex full-width gap-32" >
+<div class="d-flex full-width gap-32 blockchain-container" >
 
-    <mat-card class="mt-32  p-16 half-width">
+    <mat-card class="mt-32  p-16 blockchain-currency-chart ">
         <div id="divChartBlockchain">
             <h1>Current value</h1>
             <canvas class="mt-32 c-white max-width" id="myBlockchainChart"></canvas>
         </div>
     </mat-card>
 
-    <mat-card class="mt-32  p-16 half-width">
+    <mat-card class="mt-32  p-16 blockchain-history-chart">
         <div class="chart-history-container">
             <h1>History</h1>
             <mat-card class="mt-32  p-16 ">

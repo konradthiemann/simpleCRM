@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { Component, OnInit } from '@angular/core';
+import { Firestore, addDoc, collection, getDoc, getDocs } from '@angular/fire/firestore';
 
 import { doc } from "firebase/firestore";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -7,13 +7,14 @@ import { Finance } from '../models/finance.class';
 import { DialogAddFinanceSuccessfulComponent } from '../dialog-add-finance-successful/dialog-add-finance-successful.component';
 import { User } from 'src/models/user.class';
 import { SharedService } from '../shared.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dialog-add-finance',
   templateUrl: './dialog-add-finance.component.html',
   styleUrls: ['./dialog-add-finance.component.scss']
 })
-export class DialogAddFinanceComponent {
+export class DialogAddFinanceComponent implements OnInit{
 
   constructor(
     private firestore: Firestore,
@@ -21,6 +22,11 @@ export class DialogAddFinanceComponent {
     public dialog: MatDialog,
     public sharedService: SharedService,
   ) { }
+
+  ngOnInit(): void {
+    this.people$ = this.sharedService.getUsers();
+    
+  }
 
   finance: Finance = new Finance();
   creationDate: Date | undefined;
@@ -31,14 +37,20 @@ export class DialogAddFinanceComponent {
   transaction: any;
   user!: User;
 
+  people$: Observable<any[]> | undefined;
+  chosenUser: any;
+
+
   saveFinance() {
     this.finance.creationDate = this.creationDate?.getTime();
     this.finance.category = this.category;
-    this.finance.userId = this.userId;
+    this.finance.userId = this.chosenUser;
     this.finance.note = this.note;
     this.finance.transaction = this.transaction;
     this.finance.firstName = this.sharedService.getCurrentUserFirstName();
     this.finance.lastName = this.sharedService.getCurrentUserLastName();
+    let date = new Date();
+    this.finance.date = date.getTime();
 
     this.loading = true;
     addDoc(collection(this.firestore, 'finances'), this.finance.toJSON()).then((result: any) => {

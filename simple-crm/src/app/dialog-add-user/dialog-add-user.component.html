@@ -1,8 +1,8 @@
 <div class="dialog-container">
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <h1 mat-dialog-title>Add User</h1>
-    <div mat-dialog-content>
-        <div>
+    <div mat-dialog-content >
+        <div class="mt-32">
             <mat-form-field appearance="outline" class="mr-16">
                 <mat-label>First name</mat-label>
                 <input required [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First name">
@@ -18,7 +18,9 @@
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>E-mail</mat-label>
                 <input required [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="E-mail">
+                <!-- <mat-error *ngIf="emailAlreadyTaken" class="c-pink">This email is already taken.</mat-error> -->
             </mat-form-field>
+            <span *ngIf="emailAlreadyTaken" class="c-pink error-message">This email is already taken.</span>
         </div>
 
         <div>
@@ -52,7 +54,7 @@
 
         <div mat-dialog-actions>
             <button mat-button (click)="dialogRef.close()">Cancel</button>
-            <button mat-button (click)="saveUser()" [mat-dialog-close]="" cdkFocusInitial>Save</button>
+            <button mat-button (click)="saveUser()" cdkFocusInitial>Save</button>
         </div>
     </div>
 </div>

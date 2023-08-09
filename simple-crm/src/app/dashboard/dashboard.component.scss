@@ -2,9 +2,11 @@ mat-card {
 
     h1,
     h2 {
+        margin: 0;
         text-align: center;
     }
 }
+
 
 .finance-container{
     justify-content: space-between;
@@ -19,14 +21,8 @@ mat-card {
     padding-bottom: 40px;
 }
 
-#myChart{
-    height: 100% !important;
-    width: 600px !important;
-}
-
-#myChartPie {
-    height: 600px !important;
-    width: 600px !important;
+.year-overview{
+    width: 50%;
 }
 
 #divChartPie {
@@ -34,6 +30,27 @@ mat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.chart-pie{
+    width: 70%;
+}
+
+.latest-expense{
+    width: 30%;
+}
+
+.top-right-container{
+    width: 50%;
+}
+
+.inner-latest-expense{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
 }
 
 .button-container{
@@ -44,4 +61,67 @@ mat-card {
 #myBlockchainChart{
     width: 100%;
     height: 600px;
+}
+
+.blockchain-currency-chart{
+    width: 50%;
+}
+
+.blockchain-history-chart{
+    width: 50%;
+}
+
+@media (max-width: 2170px){
+
+    #divChart{
+        height: unset;
+    }
+
+    .finance-container{
+        justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .year-overview{
+        width: 100%;
+    }
+
+    .top-right-container{
+        width: 100%;
+    }
+    .chart-pie{
+        width: 50%;
+    }
+    
+    .latest-expense{
+        width: 50%;
+    }
+}
+
+@media (max-width: 1400px){
+    .top-right-container{
+        flex-direction: column;
+    }
+
+    .chart-pie{
+        width: 100%;
+    }
+    
+    .latest-expense{
+        width: 100%;
+    }
+
+    .blockchain-container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .blockchain-currency-chart{
+        width: 100%;
+    }
+    
+    .blockchain-history-chart{
+        width: 100%;
+    }
 }

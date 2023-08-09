@@ -1,7 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h1{
+    margin: 0 !important;
+}
+
+h2{
+    margin: 0 !important;
+}
+
+h3{
+    margin: 0 !important;
+}
 
 .d-flex{
     display: flex;
@@ -16,7 +29,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .mt-32{
-    margin-top: 32px;
+    margin-top: 32px !important;
 }
 
 .p-16{
@@ -33,6 +46,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .gap-32{
     gap: 32px;
+}
+
+.quater-width{
+    width: 25%;
 }
 
 .half-width{
@@ -64,6 +81,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .underline-white{
     border-bottom: 1px solid white ;
+}
+
+.underline-black{
+    border-bottom: 1px solid black ;
+}
+
+.successful-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 input::-webkit-outer-spin-button,

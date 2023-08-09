@@ -50,3 +50,9 @@ mat-card-content {
     }
 
 }
+
+@media(max-width:900px){
+    .td-city{
+        display: none;
+    }
+}

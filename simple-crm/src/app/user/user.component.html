@@ -4,12 +4,12 @@
       <tr>
         <th>Name</th>
         <th>Email</th>
-        <th>City</th>
+        <th class="td-city">City</th>
       </tr>
       <tr *ngFor="let user of allUsers" [routerLink]="['/user/' + user['customIdName']]">
         <td>{{user['firstName']}} {{user['lastName']}}</td>
         <td>{{user['email']}}</td>
-        <td>{{user['city']}}</td>
+        <td class="td-city">{{user['city']}}</td>
       </tr>
     </table>
   </mat-card-content>
