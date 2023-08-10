@@ -9,6 +9,7 @@ export class User {
     city: string | undefined;
     email: string | undefined;
     password: string | undefined;
+    id: any | undefined;
 
     constructor(obj?: any) {
 
@@ -20,6 +21,7 @@ export class User {
         this.city = obj ? obj.city : '';
         this.email = obj ? obj.email : '';
         this.password = obj ? obj.password : '';
+        this.id = obj ? obj.id : '';
     }
 
     public toJSON() {
@@ -32,6 +34,7 @@ export class User {
             city: this.city,
             email: this.email,
             password: this.password,
+            id: this.id,
         }
     }
 }

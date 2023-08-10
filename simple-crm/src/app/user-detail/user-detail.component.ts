@@ -128,10 +128,12 @@ export class UserDetailComponent implements OnInit {
     dialog.componentInstance.userId = this.userId;
   }
 
-  openAddFinanceDialog() {
+  openAddFinanceDialog(userId: any) {
     const dialog = this.dialog.open(DialogAddFinanceComponent);
     dialog.componentInstance.userId = this.userId;
+    dialog.componentInstance.chosenUser = userId;
     dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.disableSelection = true;
   }
 
   openNoteDialog(transaction: any) {

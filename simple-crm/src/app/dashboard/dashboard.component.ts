@@ -354,10 +354,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  openAddFinanceDialog() {
+  openAddFinanceDialog(id:any) {
     const dialog = this.dialog.open(DialogAddFinanceComponent);
     dialog.componentInstance.userId = this.id;
     dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.disableSelection = false;
   }
   //Blockchain
 

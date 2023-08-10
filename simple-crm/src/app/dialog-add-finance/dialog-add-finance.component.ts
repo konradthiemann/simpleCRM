@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Firestore, addDoc, collection, getDoc, getDocs } from '@angular/fire/firestore';
 
 import { doc } from "firebase/firestore";
@@ -27,6 +27,8 @@ export class DialogAddFinanceComponent implements OnInit{
     this.people$ = this.sharedService.getUsers();
     
   }
+
+  disableSelection: boolean = false;
 
   finance: Finance = new Finance();
   creationDate: Date | undefined;
