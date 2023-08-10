@@ -1,5 +1,5 @@
 <mat-drawer-container class="mat-drawer-container" autosize>
-  <mat-drawer #drawer class="sidenav" [opened]="true" [mode]="isMobileView ? 'over' : 'side'">
+  <mat-drawer #drawer class="sidenav" [opened]="isMobileView ? false : true" [mode]="isMobileView ? 'over' : 'side'">
     <div class="logo-container">
       <svg width="362.05" height="60.24176324503311" viewBox="0 0 402.6666666666667 67" class="css-1j8o68f">
         <defs id="SvgjsDefs1735"></defs>
@@ -34,7 +34,7 @@
       <li (click)="closeDrawer()" routerLinkActive="active" [routerLink]="'/privacy-policy'"><div class="active-route" routerLinkActive="active"></div><mat-icon>policy</mat-icon>Privacy policy</li>
       <li (click)="closeDrawer()" routerLinkActive="active" [matMenuTriggerFor]="menu"><div class="active-route" routerLinkActive="active"></div><mat-icon>login</mat-icon>Log out</li>
       <mat-menu #menu="matMenu">
-        <button (click)="openLogInDialog()" mat-menu-item>Log out</button>
+        <button (click)="logOut()" mat-menu-item>Log out</button>
       </mat-menu>
     </ul>
   </mat-drawer>

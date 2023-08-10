@@ -27,7 +27,7 @@ export class DialogLogInComponent implements OnInit {
   loading = false;
   email: any;
   password: any;
-  hide: any;
+  hide: any ;
   passwordSaved: boolean = false;
   currentRoute:any;
   noMatch:boolean = false;
@@ -41,6 +41,7 @@ export class DialogLogInComponent implements OnInit {
     this.password = localStorage.getItem('password');
     if (localStorage.getItem('checkbox') == 'true') {
       this.passwordSaved = true;
+      this.logIn(this.email, this.password);
     }
   }
 
@@ -50,10 +51,10 @@ export class DialogLogInComponent implements OnInit {
     const colRef = collection(db, "users");
     const docsSnap = await getDocs(colRef);
 
-    docsSnap.forEach(doc => {
+    for(const doc of docsSnap.docs) {
       if (doc.get('email') == (this.email || email) && doc.get('password') == (this.password | password)) {
         this.sharedService.setCurrentUserInfo(doc.id, doc);
-        this.checkRememberMe();
+        this.checkRememberMe(doc.get('email'), doc.get('password'));
         this.dialog.open(DialogLogInSuccessfulComponent, {
           enterAnimationDuration: '450ms',
           exitAnimationDuration: '450ms'
@@ -62,16 +63,18 @@ export class DialogLogInComponent implements OnInit {
         this.loading = false;
         this.noMatch = false;
         this.dialogRef.close();
+        break;
+      }else{
+        this.noMatch = true;
       }
-    })
+    }
       this.loading = false;
-      this.noMatch = true;
   }
 
-  checkRememberMe() {
+  checkRememberMe(email: any, password: any) {
     if (this.passwordSaved) {
-      localStorage.setItem('email', this.email);
-      localStorage.setItem('password', this.password);
+      localStorage.setItem('email', email);
+      localStorage.setItem('password', password);
       localStorage.setItem('checkbox', 'true');
     } else {
       localStorage.removeItem('email');

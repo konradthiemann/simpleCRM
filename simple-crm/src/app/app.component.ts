@@ -29,13 +29,19 @@ export class AppComponent {
 
   isMobileView = false;
 
-  
+  logOut() {
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    localStorage.removeItem('checkbox');
+    this.router.navigate(['/log-in']);
+  }
+
   openLogInDialog() {
     this.router.navigate(['/log-in']);
   }
 
   checkViewport() {
-    this.isMobileView = window.innerWidth <= 600;
+    this.isMobileView = window.innerWidth <= 700;
   }
 
   title = 'simple-crm';

@@ -13,9 +13,9 @@
         <div>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Enter your password</mat-label>
-                <input [disabled]="loading" [(ngModel)]="password" matInput [type]="hide ? 'password' : 'text'">
+                <input [disabled]="loading" [(ngModel)]="password" matInput [type]="!hide ? 'password' : 'text'">
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
+                    [attr.aria-pressed]="!hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
@@ -27,7 +27,7 @@
 
         <div mat-dialog-actions>
             <button mat-button (click)="logIn(null, null)" cdkFocusInitial>Log in</button>
-            <button mat-button (click)="logIn('max-mustermann@muster.de', 1)" [mat-dialog-close]=""
+            <button mat-button (click)="logIn('max-mustermann@muster.de', '1')" [mat-dialog-close]=""
                 cdkFocusInitial>Guest</button>
         </div>
 
