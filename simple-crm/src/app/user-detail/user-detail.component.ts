@@ -12,6 +12,7 @@ import { SharedService } from '../shared.service';
 import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
 import { DialogChangePasswordComponent } from '../dialog-change-password/dialog-change-password.component';
 import { DialogShowNoteComponent } from '../dialog-show-note/dialog-show-note.component';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
@@ -27,6 +28,9 @@ export class UserDetailComponent implements OnInit {
     public sharedService: SharedService,
   ) { }
 
+  expenseTransactions$: Observable<any[]> | undefined;
+  incomeTransactions$: Observable<any[]> | undefined;
+
   expenseTransactions: any = [];
   incomeTransactions: any = [];
 
@@ -41,8 +45,11 @@ export class UserDetailComponent implements OnInit {
     this.checkForLogIn();
     this.getUserId();
     this.currentUserEmail = this.sharedService.getCurrentEmail();
-    this.getFinances();
-    this.subscribeFinance();
+    this.getFinances().then(() => {
+      this.expenseTransactions$ = of(this.expenseTransactions);
+      this.incomeTransactions$ = of(this.incomeTransactions);
+    });
+    // this.subscribeFinance();
   }
 
   checkForLogIn() {
@@ -69,22 +76,28 @@ export class UserDetailComponent implements OnInit {
       });
   }
 
-  async getFinances() {
-
-    const db = getFirestore();
-    const colRef = collection(db, "finances");
-    const docsSnap = await getDocs(colRef);
-
-    this.expenseTransactions = [];
-    this.incomeTransactions = [];
-
-    docsSnap.forEach(doc => {
-      if (doc.get('userId') == this.userId && doc.get('transaction') == 'expense') {
-        this.expenseTransactions.push(doc.data());
-      }
-      if (doc.get('userId') == this.userId && doc.get('transaction') == 'income') {
-        this.incomeTransactions.push(doc.data());
-      }
+  async getFinances(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      const db = getFirestore();
+      const colRef = collection(db, "finances");
+      const docsSnap = await getDocs(colRef);
+  
+      const expenseTransactions:any = [];
+      const incomeTransactions:any = [];
+  
+      docsSnap.forEach(doc => {
+        if (doc.get('userId') == this.userId && doc.get('transaction') == 'expense') {
+          expenseTransactions.push(doc.data());
+        }
+        if (doc.get('userId') == this.userId && doc.get('transaction') == 'income') {
+          incomeTransactions.push(doc.data());
+        }
+      });
+  
+      this.expenseTransactions = expenseTransactions;
+      this.incomeTransactions = incomeTransactions;
+  
+      resolve();
     });
   }
 
@@ -136,7 +149,8 @@ export class UserDetailComponent implements OnInit {
 
   }
 
-  async deleteExpense(expense: any) {
+  async deleteExpense(expense: any, event: Event) {
+    event.stopPropagation();
     for (let i = 0; i < this.expenseTransactions.length; i++) {
       if (this.expenseTransactions[i] === expense) {
         const db = getFirestore();
@@ -157,7 +171,8 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
-  async deleteIncome(income: any) {
+  async deleteIncome(income: any, event: Event) {
+    event.stopPropagation();
     for (let i = 0; i < this.incomeTransactions.length; i++) {
       if (this.incomeTransactions[i] === income) {
         const db = getFirestore();

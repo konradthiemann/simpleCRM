@@ -53,16 +53,15 @@
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
-            <tr *ngFor="let income of incomeTransactions" (click)="openNoteDialog(income)">
+            <tr *ngFor="let income of incomeTransactions$ | async" (click)="openNoteDialog(income)">
                 <td class="quater-width td-creator">{{income.firstName}} {{income.lastName}}</td>
                 <td class="quater-width">{{income.category}}</td>
                 <td class="quater-width">{{income.amount}}€</td>
                 <td class="quater-width">{{income.creationDate | date : 'yyyy-MM-dd'}}</td>
 
-                <button mat-mini-fab (click)="deleteIncome(income)" class="delete-button pin-right">
+                <button mat-mini-fab (click)="deleteIncome(income, $event)" class="delete-button pin-right">
                     <mat-icon>delete</mat-icon>
                 </button>
-
             </tr>
         </table>
     </mat-card-content>
@@ -82,13 +81,13 @@
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
-            <tr *ngFor="let expense of expenseTransactions" (click)="openNoteDialog(expense)">
+            <tr *ngFor="let expense of expenseTransactions$ | async" (click)="openNoteDialog(expense)">
                 <td class="quater-width td-creator">{{expense.firstName}} {{expense.lastName}}</td>
                 <td class="quater-width">{{expense.category}}</td>
                 <td class="quater-width">{{expense.amount}}€</td>
                 <td class="quater-width">{{expense.creationDate | date : 'yyyy-MM-dd'}}</td>
 
-                <button mat-mini-fab (click)="deleteExpense(expense)" class="delete-button pin-right">
+                <button mat-mini-fab (click)="deleteExpense(expense, $event)" class="delete-button pin-right">
                     <mat-icon>delete</mat-icon>
                 </button>
             </tr>
