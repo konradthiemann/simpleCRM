@@ -20,15 +20,15 @@ Chart.register(...registerables);
 export class DashboardComponent implements OnInit {
 
   constructor(
-    public dialog: MatDialog, 
-    private route: ActivatedRoute, 
-    private sharedService: SharedService, 
-    private firestore: Firestore, 
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private sharedService: SharedService,
+    private firestore: Firestore,
     private router: Router,
 
-    ) { }
+  ) { }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.loadContent();
     this.createBlockchainJson();
     this.createBlockchainHistoryJson();
@@ -46,8 +46,8 @@ export class DashboardComponent implements OnInit {
   API_URL: string = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Ctether%2Cbinancecoin%2Cusd-coin&vs_currencies=eur';
   API_HISTORY_URL: string = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=eur&days=7&interval=daily';
   blockchainData: any;
-  blockchainNames:any = ['bitcoin', 'ethereum', 'tether', 'binancecoin', 'usd-coin'];
-  blockchainDays:any = [null, null, null, null, null, null, null, null];
+  blockchainNames: any = ['bitcoin', 'ethereum', 'tether', 'binancecoin', 'usd-coin'];
+  blockchainDays: any = [null, null, null, null, null, null, null, null];
   blockchainPrices: any = [
     { 'bitcoin': null },
     { 'ethereum': null },
@@ -63,11 +63,11 @@ export class DashboardComponent implements OnInit {
     { 'binancecoin': null },
     { 'usd-coin': null }
   ];
-  blockchainHistoryBitcoin:any;
-  blockchainHistoryEthereum:any;
-  blockchainHistoryTether:any;
-  blockchainHistoryBinanceCoin:any;
-  blockchainHistoryUsdCoin:any;
+  blockchainHistoryBitcoin: any;
+  blockchainHistoryEthereum: any;
+  blockchainHistoryTether: any;
+  blockchainHistoryBinanceCoin: any;
+  blockchainHistoryUsdCoin: any;
 
   latestExpense: any = [
     { "latestDateTimestamp": 0 },
@@ -79,34 +79,26 @@ export class DashboardComponent implements OnInit {
     { "latestNote": null },
   ];
 
-  expenses: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  income: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  expenses: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  income: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   monthAmount: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   expensesJSON: any = [
     [
-      { "category": "Grocery Shopping/Food & Drinks", "amount": 0 },
-      { "category": "Household & Personal Care Products", "amount": 0 },
-      { "category": "Cosmetics", "amount": 0 },
-      { "category": "Fuel/Gas", "amount": 0 },
-      { "category": "Online Shopping", "amount": 0 },
-      { "category": "Dining Out/Entertainment", "amount": 0 },
-      { "category": "Clothing & Jewelry", "amount": 0 },
-      { "category": "Bills", "amount": 0 },
-      { "category": "Education", "amount": 0 },
-      { "category": "Home (Decor, Organization, etc.)", "amount": 0 },
-      { "category": "Hobbies/Accessories, etc.", "amount": 0 },
-      { "category": "Leisure Activities", "amount": 0 },
-      { "category": "Gifts", "amount": 0 },
-      { "category": "Eating Out", "amount": 0 },
-      { "category": "Health/Medications/...", "amount": 0 },
-      { "category": "Special Purchases/Expenses", "amount": 0 },
-      { "category": "Mobility", "amount": 0 },
-      { "category": "Miscellaneous Expenses", "amount": 0 }
+      { "category": "Staffing", "amount": 0 },
+      { "category": "Cloud Services", "amount": 0 },
+      { "category": "Software Development", "amount": 0 },
+      { "category": "Consultation", "amount": 0 },
+      { "category": "Training", "amount": 0 },
+      { "category": "Project Management", "amount": 0 },
+      { "category": "Licensing Costs", "amount": 0 },
+      { "category": "IT Infrastructure", "amount": 0 },
+      { "category": "Marketing and Sales", "amount": 0 },
+      { "category": "Support and Maintenance", "amount": 0 }
     ]
   ]
 
- 
+
   loadContent() {
     // console.log(this.sharedService.getCurrentUserId())
     let id = this.sharedService.getCurrentUserId();
@@ -120,13 +112,15 @@ export class DashboardComponent implements OnInit {
         this.calcExpenses();
       });
 
-      this.calcExpenses();
+      // this.calcExpenses();
     } else {
       this.router.navigate(['/log-in']);
     }
   }
 
   async calcExpenses() {
+    this.expenses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.income = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     const db = getFirestore();
     const colRef = collection(db, "finances");
     const docsSnap = await getDocs(colRef);
@@ -171,7 +165,7 @@ export class DashboardComponent implements OnInit {
     }
     this.loadTestChart();
     this.loadPieChart();
-    
+
 
     // this.loadLatestExpense();
   }
@@ -189,7 +183,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  pieChart:any
+  pieChart: any
 
   loadPieChart() {
     if (this.pieChart != undefined) {
@@ -199,24 +193,16 @@ export class DashboardComponent implements OnInit {
       type: 'pie',
       data: {
         labels: [
-          'Grocery Shopping/Food & Drinks',
-          'Household & Personal Care Products',
-          'Cosmetics',
-          'Fuel/Gas',
-          'Online Shopping',
-          'Dining Out/Entertainment',
-          'Clothing & Jewelry',
-          'Bills',
-          'Education',
-          'Home (Decor, Organization, etc.)',
-          'Hobbies/Accessories, etc.',
-          'Leisure Activities',
-          'Gifts',
-          'Eating Out',
-          'Health/Medications/...',
-          'Special Purchases/Expenses',
-          'Mobility',
-          'Miscellaneous Expenses'
+          'Staffing',
+          'Cloud Services',
+          'Software Development',
+          'Consultation',
+          'Training',
+          'Project Management',
+          'Licensing Costs',
+          'IT Infrastructure',
+          'Marketing and Sales',
+          'Support and Maintenance'
         ],
         datasets: [{
           label: 'Month overview',
@@ -286,7 +272,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  myChart:any ;
+  myChart: any;
 
   loadTestChart() {
     if (this.myChart != undefined) {
@@ -354,7 +340,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  openAddFinanceDialog(id:any) {
+  openAddFinanceDialog(id: any) {
     const dialog = this.dialog.open(DialogAddFinanceComponent);
     dialog.componentInstance.userId = this.id;
     dialog.componentInstance.user = new User(this.user.toJSON());
@@ -373,10 +359,10 @@ export class DashboardComponent implements OnInit {
     this.blockchainPrices[3] = this.blockchainData['binancecoin']['eur'];
     this.blockchainPrices[4] = this.blockchainData['usd-coin']['eur'];
     this.loadBlockchainChart();
-    
+
   }
 
-  async createBlockchainHistoryJson(){
+  async createBlockchainHistoryJson() {
     for (let i = 0; i < this.blockchainNames.length; i++) {
       let response = await fetch(`https://api.coingecko.com/api/v3/coins/${this.blockchainNames[i]}/market_chart?vs_currency=eur&days=7&interval=daily`)
       let blockchainApi = await response.json();
@@ -388,38 +374,38 @@ export class DashboardComponent implements OnInit {
     this.getHistoryData(this.blockchainHistory);
   }
 
-  getHistoryDate(history:any){
+  getHistoryDate(history: any) {
     for (let i = 0; i < history[0]['prices'].length; i++) {
-      
+
       var newDate = new Date(history[0]['prices'][i][0]);
-      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       var year = newDate.getFullYear();
       var month = months[newDate.getMonth()];
       var date = newDate.getDate();
-      var time = date + ' ' + month + ' ' + year ;
-      
+      var time = date + ' ' + month + ' ' + year;
+
       this.blockchainDays[i] = time;
     }
   }
 
-  getHistoryData(history:any){
+  getHistoryData(history: any) {
     for (let i = 0; i < history.length; i++) {
       this.getSingleHistoryDataSet(history[i], i);
     }
     this.loadBlockchainChartHistory();
   }
 
-  blockchainHistoryData:any = [
-    {'historyPrices' : []},
-    {'historyPrices' : []},
-    {'historyPrices' : []},
-    {'historyPrices' : []},
-    {'historyPrices' : []},
+  blockchainHistoryData: any = [
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
 
   ];
 
-  
-  getSingleHistoryDataSet(history:any, j:any){
+
+  getSingleHistoryDataSet(history: any, j: any) {
     for (let i = 0; i < history['prices'].length; i++) {
       this.blockchainHistoryData[j]['historyPrices'][i] = history['prices'][i][1];
     }

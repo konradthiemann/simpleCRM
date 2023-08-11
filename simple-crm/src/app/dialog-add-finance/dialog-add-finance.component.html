@@ -2,12 +2,12 @@
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <h1 mat-dialog-title>Add finance</h1>
     <div mat-dialog-content>
-        
+
         <mat-form-field class="mt-32" appearance="outline">
             <mat-label>Select user</mat-label>
             <mat-select [(ngModel)]="chosenUser" [disabled]="disableSelection">
                 <mat-option *ngFor="let person of people$ | async" [value]="person.id">
-                {{ person.firstName }} {{ person.lastName }}
+                    {{ person.firstName }} {{ person.lastName }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -29,7 +29,7 @@
 
             <button mat-button [disabled]="!transaction" [matMenuTriggerFor]="menu">select</button>
             <mat-menu #menu="matMenu">
-                <button *ngIf="transaction === 'expense'" (click)="addCategory('Grocery Shopping/Food & Drinks')"
+                <!-- <button *ngIf="transaction === 'expense'" (click)="addCategory('Grocery Shopping/Food & Drinks')"
                     mat-menu-item>Grocery Shopping/Food & Drinks</button>
                 <button *ngIf="transaction === 'expense'" (click)="addCategory('Household & Personal Care Products')"
                     mat-menu-item>Household & Personal Care Products</button>
@@ -64,13 +64,43 @@
                 <button *ngIf="transaction === 'expense'" (click)="addCategory('Mobility')"
                     mat-menu-item>Mobility</button>
                 <button *ngIf="transaction === 'expense'" (click)="addCategory('Miscellaneous Expenses')"
-                    mat-menu-item>Miscellaneous Expenses</button>
-                <button *ngIf="transaction === 'income'" (click)="addCategory('Salary')" mat-menu-item>Salary</button>
+                    mat-menu-item>Miscellaneous Expenses</button> -->
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Staffing')"
+                    mat-menu-item>Staffing</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Cloud Services')" mat-menu-item>Cloud
+                    Services</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Software Development')"
+                    mat-menu-item>Software Development</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Consultation')"
+                    mat-menu-item>Consultation</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Training')"
+                    mat-menu-item>Training</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Project Management')"
+                    mat-menu-item>Project Management</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Licensing Costs')"
+                    mat-menu-item>Licensing Costs</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('IT Infrastructure')" mat-menu-item>IT
+                    Infrastructure</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Marketing and Sales')"
+                    mat-menu-item>Marketing and Sales</button>
+                <button *ngIf="transaction === 'expense'" (click)="addCategory('Support and Maintenance')"
+                    mat-menu-item>Support and Maintenance</button>
+                <!-- <button *ngIf="transaction === 'income'" (click)="addCategory('Salary')" mat-menu-item>Salary</button>
                 <button *ngIf="transaction === 'income'" (click)="addCategory('Gift')" mat-menu-item>Gift</button>
                 <button *ngIf="transaction === 'income'" (click)="addCategory('Salary')" mat-menu-item>Salary</button>
                 <button *ngIf="transaction === 'income'" (click)="addCategory('Sold Item')" mat-menu-item>Sold
                     Item</button>
-                <button *ngIf="transaction === 'income'" (click)="addCategory('Others')" mat-menu-item>Others</button>
+                <button *ngIf="transaction === 'income'" (click)="addCategory('Others')" mat-menu-item>Others</button> -->
+                <button *ngIf="transaction === 'income'" (click)="addCategory('Consultation')"
+                    mat-menu-item>Consultation</button>
+                <button *ngIf="transaction === 'income'" (click)="addCategory('Software Development')"
+                    mat-menu-item>Software Development</button>
+                <button *ngIf="transaction === 'income'" (click)="addCategory('Training')"
+                    mat-menu-item>Training</button>
+                <button *ngIf="transaction === 'income'" (click)="addCategory('Cloud Services')" mat-menu-item>Cloud
+                    Services</button>
+                <button *ngIf="transaction === 'income'" (click)="addCategory('Project Implementation')"
+                    mat-menu-item>Project Implementation</button>
             </mat-menu>
         </div>
 
