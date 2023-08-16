@@ -1,6 +1,8 @@
+<div class="headline"><h2 class="c-white">User-detail</h2></div>
+
 <mat-card class="user-detail-header">
 
-    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menu">
+    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menu" *ngIf="(user.email == currentUserEmail) || (currentUserEmail == 'admin@admin.de')">
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -23,7 +25,7 @@
 </mat-card>
 
 <mat-card class="mt-32">
-    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menuAddress">
+    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="menuAddress" *ngIf="(user.email == currentUserEmail) || (currentUserEmail == 'admin@admin.de')">
         <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menuAddress="matMenu">

@@ -101,14 +101,14 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
-  subscribeFinance() {
-    this.firestore
-      .collection('finances')
-      .valueChanges()
-      .subscribe((changes: any) => {
-        this.getFinances();
-      })
-  }
+  // subscribeFinance() {
+  //   this.firestore
+  //     .collection('finances')
+  //     .valueChanges()
+  //     .subscribe((changes: any) => {
+  //       this.getFinances();
+  //     })
+  // }
 
   editUserAddress() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
