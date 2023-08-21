@@ -207,8 +207,6 @@ export class DashboardComponent implements OnInit {
     
     this.latestExpense$ = of(this.latestExpense);
     this.latestIncome$ = of(this.latestIncome);
-    console.log(this.latestExpense,this.latestExpense$, 'latestExpense');
-    console.log(this.latestIncome,this.latestIncome$, 'latestIncome');
 
     this.loadTestChart();
     this.loadPieChart();
@@ -520,7 +518,6 @@ export class DashboardComponent implements OnInit {
     for (let i = 0; i < history['prices'].length; i++) {
       this.blockchainHistoryData[j]['historyPrices'][i] = history['prices'][i][1];
     }
-    // console.log(this.blockchainHistoryData );
   }
 
   blockchainChart: any;
@@ -978,7 +975,6 @@ export class DashboardComponent implements OnInit {
   }
 
   openIncomeInfoDialog(info: any) {
-    // console.log(info);
     const dialog = this.dialog.open(DialogShowInfoComponent, {
       data: info, 
   });
