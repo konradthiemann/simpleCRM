@@ -111,6 +111,10 @@ h3{
     flex-wrap: wrap !important;
 }
 
+.space-evenly{
+    justify-content: space-evenly !important;
+}
+
 .headline{
     background:  linear-gradient(to right,#3f51b5,  #3f51b541);
     // height: 50px;
@@ -131,8 +135,7 @@ h3{
 
 .segment-headline{
     background:  linear-gradient(to top,#3f51b5,  #3f51b541);
-    // background-color: #afaff8;
-    color: white;
+    padding: 0 !important;
     width: calc(100% + 32px) !important;
     transform: translateY(-16px);
     margin-top: 0 !important;
@@ -141,6 +144,8 @@ h3{
     align-items: center;
     display: flex;
     justify-content: center;
+    text-align: center;
+    color: white !important;
 }
 
 .dashboard-headline{
@@ -166,6 +171,15 @@ h3{
 mat-card{
     border-radius: 15px !important;
 }
+
+.border-solid{
+    border: solid 1px rgba($color: #000000, $alpha: 0.1) !important;
+}
+
+.cdk-overlay-pane {
+    border-radius: 15px !important;
+    overflow: hidden;
+  }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

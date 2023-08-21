@@ -1,4 +1,11 @@
 h1{
-    display: flex;
+    margin: 0 !important;
+    text-align: center;
+    padding: 0 !important;
+    // width: 100% !important;
+    color: white;
+    // transform: unset !important;
     justify-content: center;
+    align-items: center;
+    display: flex;
 }

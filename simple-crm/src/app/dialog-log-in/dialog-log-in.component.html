@@ -1,7 +1,7 @@
 <div class="dialog-container">
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-    <h1 mat-dialog-title>Log in</h1>
-    <div mat-dialog-content>
+    <h1 mat-dialog-title class="segment-headline c-white">Log in</h1>
+    <div mat-dialog-content class="input-container">
 
         <div>
             <mat-form-field appearance="outline" class="full-width mt-8">
@@ -26,9 +26,9 @@
         </div>
 
         <div mat-dialog-actions>
-            <button mat-button (click)="logIn(null, null)" cdkFocusInitial>Log in</button>
-            <button mat-button (click)="logIn('max-mustermann@muster.de', '1')" [mat-dialog-close]=""
-                cdkFocusInitial>Guest</button>
+            <button class="border-solid" mat-button (click)="logIn(null, null)" >Log in</button>
+            <button class="border-solid" mat-button (click)="logIn('max-mustermann@muster.de', '1')" [mat-dialog-close]=""
+                >Guest</button>
         </div>
 
         <div>

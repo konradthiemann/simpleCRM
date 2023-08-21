@@ -10,6 +10,7 @@ import { Chart, registerables } from 'chart.js';
 import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
 import { User } from '../models/user.class';
 import { single, Observable, of } from 'rxjs';
+import { DialogShowInfoComponent } from '../dialog-show-info/dialog-show-info.component';
 Chart.register(...registerables);
 
 @Component({
@@ -974,6 +975,13 @@ export class DashboardComponent implements OnInit {
     });
     this.birthdays = this.birthdays.slice(0, 3);
     // console.log(this.birthdays);
+  }
+
+  openIncomeInfoDialog(info: any) {
+    // console.log(info);
+    const dialog = this.dialog.open(DialogShowInfoComponent, {
+      data: info, 
+  });
   }
 
 }

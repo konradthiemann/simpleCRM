@@ -1,6 +1,6 @@
 <div class="dialog-container">
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-    <h1 mat-dialog-title>Add User</h1>
+    <h1 mat-dialog-title class="segment-headline">Add User</h1>
     <div mat-dialog-content >
         <div class="mt-32">
             <mat-form-field appearance="outline" class="mr-16">
@@ -53,8 +53,8 @@
         </div>
 
         <div mat-dialog-actions>
-            <button mat-button (click)="dialogRef.close()">Cancel</button>
-            <button mat-button (click)="saveUser()" cdkFocusInitial>Save</button>
+            <button class="border-solid" mat-button (click)="dialogRef.close()">Cancel</button>
+            <button class="border-solid" mat-button (click)="saveUser()" >Save</button>
         </div>
     </div>
 </div>

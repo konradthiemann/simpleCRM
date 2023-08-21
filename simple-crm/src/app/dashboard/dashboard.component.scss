@@ -1,4 +1,5 @@
 mat-card {
+
     h1,
     h2 {
         margin: 0;
@@ -7,11 +8,11 @@ mat-card {
 }
 
 
-.finance-container{
+.finance-container {
     justify-content: space-between;
 }
 
-.chart-container{
+.chart-container {
     display: flex;
     flex-direction: column;
     width: calc(40% - 16px);
@@ -27,7 +28,7 @@ mat-card {
     position: relative;
 }
 
-.year-total-container{
+.year-total-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -36,31 +37,35 @@ mat-card {
     padding: 0 40px;
 }
 
-.total-year-expenses{
+.total-year-expenses {
     gap: 16px;
-    p{
+
+    p {
         font-size: 32px;
         line-height: 50px;
     }
-    h2{
+
+    h2 {
         font-size: 40px;
         color: rgb(207, 98, 98);
     }
 }
 
-.total-year-income{
+.total-year-income {
     gap: 16px;
-    p{
+
+    p {
         font-size: 32px;
         line-height: 50px;
     }
-    h2{
+
+    h2 {
         color: rgb(98, 207, 98);
         font-size: 40px;
     }
 }
 
-.total-expenses{
+.total-expenses {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -70,27 +75,29 @@ mat-card {
     justify-content: center;
     align-items: center;
 
-    h2{
+    h2 {
         font-size: 32px;
-        
+
     }
-    p{
+
+    p {
         font-size: 16px;
     }
 }
 
-.year-overview{
+.year-overview {
     // width: calc(40% - 16px);
     width: 100%;
     height: 50%;
+    align-items: center;
 }
 
-.month-charts-container{
+.month-charts-container {
     display: flex;
-    
+
 }
 
-.month-container{
+.month-container {
     width: calc(45% - 16px);
 }
 
@@ -108,37 +115,37 @@ mat-card {
     align-items: center;
 }
 
-.chart-pie{
+.chart-pie {
     width: calc(50% - 16px);
 }
 
-.latest-expense{
+.latest-expense {
     width: 100%;
 }
 
-.latest-added-container-two{
+.latest-added-container-two {
     display: none;
 }
 
-.single-expense-headline{
+.single-expense-headline {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
-.single-expense-content{
+.single-expense-content {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
 }
 
-.top-right-container{
+.top-right-container {
     width: 100%;
 }
 
-.inner-latest-expense{
+.inner-latest-expense {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -147,13 +154,13 @@ mat-card {
     width: 100%;
 }
 
-.button-container{
+.button-container {
     display: flex;
     justify-content: flex-end;
     width: 70%;
 }
 
-.lower-section{
+.lower-section {
     width: 100%;
     display: flex;
     // justify-content: space-evenly;
@@ -162,44 +169,45 @@ mat-card {
     flex-wrap: wrap;
 }
 
-#myBlockchainChart{
+#myBlockchainChart {
     width: 40%;
     height: 600px;
 }
 
-.blockchain-currency-chart{
+.blockchain-currency-chart {
     // width: calc(100% - 32px - 820px);
     // min-width: 820px;
     width: 100%;
     height: 50%;
 }
 
-.blockchain-history-chart{
+.blockchain-history-chart {
     width: 50%;
 }
 
-.activity-section{
+.activity-section {
     width: 15%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
+    // width: 100%;
     // min-width: 460px;
 }
 
-.birthday-container{
-    border: 1px solid ;
+.birthday-container {
+    border: 1px solid;
     padding: 16px;
     justify-content: space-around;
     border-radius: 15px;
-    width: 70%;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 32px;
 }
 
-.birthday-component{
+.birthday-component {
     // gap: 32px;
     width: 80%;
     display: flex;
@@ -208,7 +216,7 @@ mat-card {
     // border-left: #e6e600 solid 1px;
 }
 
-.birthday-cake{
+.birthday-cake {
     border-radius: 100%;
     // color: ;
     width: 30px;
@@ -220,8 +228,8 @@ mat-card {
     justify-content: center;
 }
 
-.single-birthday{
-    border: 1px solid ;
+.single-birthday {
+    border: 1px solid;
     padding: 16px;
     justify-content: space-between;
     border-radius: 15px;
@@ -229,221 +237,257 @@ mat-card {
     display: flex;
     align-items: center;
     margin-top: 16px;
-    p{
+    transition: 0.3s;
+
+    p {
         margin: 0;
     }
+
 }
 
-.blockchain-history-box{
+.single-activity {
+    border: 1px solid;
+    padding: 16px;
+    justify-content: space-between;
+    border-radius: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    transition: 0.3s;
+
+    p {
+        margin: 0;
+    }
+
+    
+
+    &:hover {
+        background-color: #ffffff6e !important;
+        scale: 1.03;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+}
+
+.blockchain-history-box {
     // min-width: 810px;
     // width: calc(50% - 32px);
-    width: calc(100% - 16px);
+    width: 100%;
     flex-wrap: wrap;
 }
 
-.single-history{
+.single-history {
     width: 378px;
     height: 255px;
 }
 
-// @media(max-width: 2670px){
-//     .year-overview{
-//         width: 50%;
-//     }
-//     .month-container{
-//         width: 50%;
-//     }
-// }
+.activity-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    justify-content: space-between;
+}
 
-// @media(max-width: 2655px){
-//     .year-overview{
-//         width: 75%;
-//     }
-//     .latest-added-container{
-//         display: none;
-//     }
-//     .latest-added-container-two{
-//         display: flex;
-//         flex-direction: column;
-//         justify-content: space-between;
-//         align-items: center;
-//         width: 25%;
-//     }
-//     .month-container{
-//         width: 25%;
-//     }
-//     .month-charts-container{
-//         flex-direction: column;
-//         width: 100%;
-//     }
-//     .chart-pie{
-//         width: 100%;
-//     }
-//     .blockchain-currency-chart{
-//         width: 100%;
-//     }
-// }
+@media(max-width: 2450px) {
+    .finance-container {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        flex-direction: unset;
+        gap: 32px;
+        width: 100%;
+    }
+
+    .year-overview {
+        width: calc(50% - 16px);
+    }
+
+    .blockchain-currency-chart {
+        width: calc(50% - 16px);
+    }
+
+    .month-container {
+        width: 100%;
+        display: flex;
+    }
+
+    .total-expenses {
+        top: 65%;
+    }
+
+    .activity-section {
+        width: 100%;
+    }
+
+    .activity-container {
+        flex-direction: unset;
+        width: 100%;
+    }
+    .chart-pie{
+        max-height: 620px;
+
+    }
+}
+
+@media(max-width: 2180px) {
+    .month-charts-container {
+        flex-direction: column;
+        width: 25%;
+    }
+
+    .blockchain-history-box {
+        width: 75%;
+    }
+
+    .total-expenses {
+        top: 54%;
+        scale: 0.75;
+        left: 46%;
+    }
+
+    .chart-pie {
+        width: 100%;
+    }
+}
+
+@media(max-width: 2110px) {
+    .blockchain-history-box {
+        width: 70%;
+    }
+
+    .month-charts-container {
+        width: 30%;
+    }
+
+    .chart-pie {
+        width: 100%;
+    }
+}
+
+@media(max-width: 2110px) {
+    .blockchain-history-box {
+        width: 70%;
+    }
+
+    .month-charts-container {
+        width: 30%;
+    }
+
+    .chart-pie {
+        width: 100%;
+    }
+    .total-year-income{
+        p{
+            font-size: 20px;
+        }
+        h2{
+            font-size: 20px;
+        }
+    }
+    .total-year-expenses{
+        p{
+            font-size: 20px;
+        }
+        h2{
+            font-size: 20px;
+        }
+    }
+}
+
+@media(max-width: 1980px) {
+    .month-charts-container {
+        flex-direction: column;
+    }
+
+    .blockchain-history-box {}
+
+    .total-expenses {
+        top: 58%;
+        scale: 0.75;
+        left: 46%;
+    }
+
+    .chart-pie {
+        width: 100%;
+    }
+}
+
+@media(max-width: 1670px) {
+    .month-container {
+        flex-direction: column;
+    }
+
+    .month-charts-container {
+        width: 100%;
+        flex-direction: unset;
+    }
+
+    .blockchain-history-box {
+        width: 100%;
+    }
+
+    .total-expenses {
+        top: 58%;
+        scale: 0.75;
+        left: 46%;
+    }
+
+    .chart-pie {
+        width: calc(50% - 16px);
+        max-height: unset;
+
+    }
+
+    .total-expenses {
+        top: 50%;
+        scale: 1;
+        left: 50%;
+    }
+}
+
+@media(max-width: 1310px){
+    .chart-container{
+        flex-direction: column;
+    }
+    .year-overview{
+        width: 100%;
+    }
+    .blockchain-currency-chart{
+        width: 100%;
+    }
+    .month-charts-container{
+        flex-direction: column;
+    }
+    .chart-pie{
+        width: 100%;
+    }
+
+}
+
+@media(max-width: 1275px){
+    .single-history{
+        width: 100%;
+    }
+    .activity-container{
+        flex-direction: column;
+    }
+    .activity-section{
+        width: 100%;
+    }
+}
 
 
-// @media(max-width: 2595px){
-//     .blockchain-currency-chart{
-//         width: 100%;
-//     }
-//     .blockchain-history-box{
-//         width: 100%;
-//         flex-wrap: wrap;
-//     }
-// }
-
-
-// @media (max-width: 2170px){
-
-//     .month-container{
-//         width: calc(50% - 16px);
-        
-//     }
-
-//     #divChart{
-//         height: unset;
-//     }
-
-//     .finance-container{
-//         justify-content: space-between;
-//         display: flex;
-//         flex-direction: column;
-//     }
-
-//     .year-overview{
-//         width: 100%;
-//     }
-
-//     .top-right-container{
-//         width: 100%;
-//     }
-//     .chart-pie{
-//         width: 50%;
-//     }
-    
-//     // .latest-expense{
-//     //     width: 50%;
-//     // }
-// }
-
-// @media (max-width: 1400px){
-//     .top-right-container{
-//         flex-direction: column;
-//     }
-
-//     .chart-pie{
-//         width: 100%;
-//     }
-    
-//     .latest-expense{
-//         width: 100%;
-//     }
-
-//     .blockchain-container{
-//         display: flex;
-//         flex-direction: column;
-//     }
-
-//     .blockchain-currency-chart{
-//         width: 100%;
-//     }
-    
-//     .blockchain-history-chart{
-//         width: 100%;
-//     }
-// }
-
-//  @media (max-width: 900px){
-//     .total-expenses{
-//         top: 55%;
-//         p{
-//             font-size: 12px;
-//         }
-//         h2{
-//             font-size: 24px;
-//         }
-//     }
-//  }
-
-//  @media (max-width: 845px){
-//     .total-expenses{
-//         top: 65%;
-//         p{
-//             display: none !important;
-//         }
-//         h2{
-//             font-size: 16px;
-//         }
-//     }
-//  }
-
-//  @media (max-width: 845px){
-//     .total-expenses{
-//         top: 55%;
-//         p{
-//             display: unset !important;
-//             font-size: 12px;
-//         }
-//         h2{
-//             font-size: 24px;
-//         }
-//     }
-//  }
-
-//  @media (max-width: 840px){
-//     .total-expenses{
-//         top: 65%;
-//         p{
-//             display: none !important;
-//         }
-//         h2{
-//             font-size: 16px;
-//         }
-//     }
-//  }
-
-//  @media (max-width: 700px){
-//     .total-expenses{
-//         top: 50%;
-//         p{
-//             display: unset !important;
-//             font-size: 16px;
-//         }
-//         h2{
-//             font-size: 32px;
-//         }
-//     }
-//  }
-
-//  @media (max-width: 500px){
-//     .total-expenses{
-//         top: 55%;
-//         p{
-//             font-size: 14px;
-//         }
-//         h2{
-//             font-size: 24px;
-//         }
-//     }
-//  }
-
-//  @media (max-width: 445px){
-//     .total-expenses{
-//         top: 65%;
-//         p{
-//             display: none !important;
-//         }
-//         h2{
-//             font-size: 16px;
-//         }
-//     }
-//  }
-
-//  @media (max-width: 380px){
-//     .total-expenses{
-//         top: 68%;
-//     }
-//  }
+@media (max-width: 850px){
+    .chart-pie{
+        min-height: 620px;
+    }
+    .total-expenses{
+        top: 77%;
+        scale: 0.8;
+        left: 47%;
+    }
+}

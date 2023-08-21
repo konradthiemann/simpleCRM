@@ -46,6 +46,7 @@ import { DialogChangePasswordComponent } from './dialog-change-password/dialog-c
 import { DialogChangePasswordSuccessfulComponent } from './dialog-change-password-successful/dialog-change-password-successful.component';
 import { DialogShowNoteComponent } from './dialog-show-note/dialog-show-note.component';
 import { LogInComponent } from './log-in/log-in.component';
+import { DialogShowInfoComponent } from './dialog-show-info/dialog-show-info.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { LogInComponent } from './log-in/log-in.component';
     DialogChangePasswordSuccessfulComponent,
     DialogShowNoteComponent,
     LogInComponent,
+    DialogShowInfoComponent,
 
   ],
   imports: [

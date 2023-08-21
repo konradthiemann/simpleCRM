@@ -1,0 +1,13 @@
+<mat-card class="p-16">
+    <h1 class="segment-headline translate-16">Info</h1>
+    <div >
+        <h2>{{data[0].latestFirstName}} {{data[0].latestLastName}}</h2>
+        <div class="mt-32">
+            <p><b>date:</b> {{data[0].latestTimestamp | date :'dd.MM.yy'}}</p>
+            <p><b>category:</b> {{data[0].latestCategory}}</p>
+            <p><b>amount:</b> {{data[0].latestAmount}}€</p>
+        </div>
+        <p><b>note:</b> {{data[0].latestNote}}</p>
+        
+    </div>
+</mat-card>

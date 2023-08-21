@@ -1,7 +1,7 @@
 <div class="dialog-container">
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-    <h1 mat-dialog-title>Edit address</h1>
-    <div mat-dialog-content>
+    <h1 mat-dialog-title class="segment-headline">Edit address</h1>
+    <div mat-dialog-content class="input-container">
 
         <div>
             <mat-form-field appearance="outline" class="full-width mt-8">
@@ -23,8 +23,8 @@
         </div>
 
         <div mat-dialog-actions>
-            <button mat-button (click)="dialogRef.close()">Cancel</button>
-            <button mat-button (click)="saveUser()" [mat-dialog-close]="" cdkFocusInitial>Save</button>
+            <button class="border-solid" mat-button (click)="dialogRef.close()">Cancel</button>
+            <button class="border-solid" mat-button (click)="saveUser()" [mat-dialog-close]="" >Save</button>
         </div>
     </div>
 </div>

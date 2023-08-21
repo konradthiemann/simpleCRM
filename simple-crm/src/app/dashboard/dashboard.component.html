@@ -1,5 +1,3 @@
-
-
 <div class="headline">
     <h2 class="c-white">Dashboard</h2>
 </div>
@@ -38,14 +36,14 @@
 
         <mat-card class="mt-32  p-16 blockchain-currency-chart ">
             <div id="divChartBlockchain">
-                <h1 class="segment-headline translate-16">Current values</h1>
+                <h1 class="segment-headline translate-16">Current crypto values</h1>
                 <canvas class="mt-32 c-white max-width" id="myBlockchainChart"></canvas>
             </div>
         </mat-card>
 
     </div>
 
-    
+
 
     <div class="month-container  gap-32">
         <div class="d-flex gap-32 month-charts-container">
@@ -75,7 +73,7 @@
         <mat-card class="d-flex mt-32 blockchain-history-box p-16">
             <h1 class="segment-headline translate-16">History</h1>
 
-            <div class="d-flex full-width gap-32 wrap">
+            <div class="d-flex full-width gap-32 wrap space-evenly">
                 <mat-card class="mt-32 single-history p-16">
                     <div id="divChartBlockchainHistoryBitcoin">
                         <canvas class="mt-32 c-white max-width" id="myBlockchainChartHistoryBitcoin"></canvas>
@@ -113,238 +111,70 @@
                 </mat-card>
             </div>
         </mat-card>
-
-
-
-        <!-- <div class="d-flex gap-32 latest-added-container">
-            <div class="d-flex gap-32 top-right-container ">
-                <mat-card class=" mt-32  p-16 latest-expense">
-                    <h1 class="underline-white segment-headline translate-16">Latest added incomes</h1>
-                    <div class="inner-latest-expense">
-                        <mat-card class=" mt-8  p-16 full-width">
-                            <div class="single-expense-headline">
-                                <p class="fs-18">{{latestIncome[latestIncome.length - 1][0]['latestFirstName']}}
-                                    {{latestIncome[latestIncome.length - 1][0]['latestLastName']}}</p>
-                                <p class="fs-18">{{latestIncome[latestIncome.length - 1][0]['latestTimestamp'] | date :
-                                    'yyyy-MM-dd'}}</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Amount:</p>
-                                <p>{{latestIncome[latestIncome.length - 1][0]['latestAmount']}}€</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Category: </p>
-                                <p>{{latestIncome[latestIncome.length - 1][0]['latestCategory']}}</p>
-                            </div>
-                            <p class="fs-16">Note: </p>
-                            <p>{{latestIncome[latestIncome.length - 1][0]['latestNote']}}</p>
-                        </mat-card>
-                        <mat-card class=" mt-8  p-16 full-width">
-                            <div class="single-expense-headline">
-                                <p class="fs-18">{{latestIncome[latestIncome.length - 2][0]['latestFirstName']}}
-                                    {{latestIncome[latestIncome.length - 2][0]['latestLastName']}}</p>
-                                <p class="fs-18">{{latestIncome[latestIncome.length - 2][0]['latestTimestamp'] | date :
-                                    'yyyy-MM-dd'}}</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Amount:</p>
-                                <p>{{latestIncome[latestIncome.length - 2][0]['latestAmount']}}€</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Category: </p>
-                                <p>{{latestIncome[latestIncome.length - 2][0]['latestCategory']}}</p>
-                            </div>
-                            <p class="fs-16">Note: </p>
-                            <p>{{latestIncome[latestIncome.length - 2][0]['latestNote']}}</p>
-                        </mat-card>
-                        <mat-card class=" mt-8  p-16 full-width">
-                            <div class="single-expense-headline">
-                                <p class="fs-18">{{latestIncome[latestIncome.length - 3][0]['latestFirstName']}}
-                                    {{latestIncome[latestIncome.length - 3][0]['latestLastName']}}</p>
-                                <p class="fs-18">{{latestIncome[latestIncome.length - 3][0]['latestTimestamp'] | date :
-                                    'yyyy-MM-dd'}}</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Amount:</p>
-                                <p>{{latestIncome[latestIncome.length - 3][0]['latestAmount']}}€</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Category: </p>
-                                <p>{{latestIncome[latestIncome.length - 3][0]['latestCategory']}}</p>
-                            </div>
-                            <p class="fs-16">Note: </p>
-                            <p>{{latestIncome[latestIncome.length - 3][0]['latestNote']}}</p>
-                        </mat-card>
-                    </div>
-                </mat-card>
-            </div> -->
-
-            <!-- <div class="d-flex gap-32 top-right-container">
-                <mat-card class=" mt-32  p-16 latest-expense">
-                    <h1 class="underline-white segment-headline translate-16">Latest added expenses</h1>
-                    <div class="inner-latest-expense">
-                        <mat-card class=" mt-8  p-16 full-width">
-                            <div class="single-expense-headline">
-                                <p class="fs-18">{{latestExpense[latestExpense.length - 1][0]['latestFirstName']}}
-                                    {{latestExpense[latestExpense.length - 1][0]['latestLastName']}}</p>
-                                <p class="fs-18">{{latestExpense[latestExpense.length - 1][0]['latestTimestamp'] | date
-                                    :
-                                    'yyyy-MM-dd'}}</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Amount:</p>
-                                <p>{{latestExpense[latestExpense.length - 1][0]['latestAmount']}}€</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Category: </p>
-                                <p>{{latestExpense[latestExpense.length - 1][0]['latestCategory']}}</p>
-                            </div>
-                            <p class="fs-16">Note: </p>
-                            <p>{{latestExpense[latestExpense.length - 1][0]['latestNote']}}</p>
-                        </mat-card>
-                        <mat-card class=" mt-8  p-16 full-width">
-                            <div class="single-expense-headline">
-                                <p class="fs-18">{{latestExpense[latestExpense.length - 2][0]['latestFirstName']}}
-                                    {{latestExpense[latestExpense.length - 2][0]['latestLastName']}}</p>
-                                <p class="fs-18">{{latestExpense[latestExpense.length - 2][0]['latestTimestamp'] | date
-                                    :
-                                    'yyyy-MM-dd'}}</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Amount:</p>
-                                <p>{{latestExpense[latestExpense.length - 2][0]['latestAmount']}}€</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Category: </p>
-                                <p>{{latestExpense[latestExpense.length - 2][0]['latestCategory']}}</p>
-                            </div>
-                            <p class="fs-16">Note: </p>
-                            <p>{{latestExpense[latestExpense.length - 2][0]['latestNote']}}</p>
-                        </mat-card>
-                        <mat-card class=" mt-8  p-16 full-width">
-                            <div class="single-expense-headline">
-                                <p class="fs-18">{{latestExpense[latestExpense.length - 3][0]['latestFirstName']}}
-                                    {{latestExpense[latestExpense.length - 3][0]['latestLastName']}}</p>
-                                <p class="fs-18">{{latestExpense[latestExpense.length - 3][0]['latestTimestamp'] | date
-                                    :
-                                    'yyyy-MM-dd'}}</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Amount:</p>
-                                <p>{{latestExpense[latestExpense.length - 3][0]['latestAmount']}}€</p>
-                            </div>
-                            <div class="single-expense-content">
-                                <p class="fs-16 mr-8">Category: </p>
-                                <p>{{latestExpense[latestExpense.length - 3][0]['latestCategory']}}</p>
-                            </div>
-                            <p class="fs-16">Note: </p>
-                            <p>{{latestExpense[latestExpense.length - 3][0]['latestNote']}}</p>
-                        </mat-card>
-                    </div>
-                </mat-card>
-            </div> 
-        </div>-->
     </div>
 
     <mat-card class="activity-section mt-32 gap-32 p-16">
         <h1 class="segment-headline">Activities</h1>
 
-        <div class="birthday-container" style="border-color: #dfdf4a;">
-            <mat-icon class="birthday-cake" style="color: #e6e600">cake</mat-icon>
-            <h2>Upcoming birthdays</h2>
-            <div class="birthday-component">
-                <ng-container *ngFor="let birthday of birthdays$ | async; let i = index">
-                    <div class=" full-width d-flex single-birthday " style="border-color: #dfdf4a; background-color: #dfdf4a2d;">
-                        <div class="birthday-content">
-                            <p>{{birthdays[i][0]}} {{birthdays[i][1]}}</p>
-                        </div>
-                        <div class="birthday-content">
+        <div class="activity-container">
 
-                            <p>{{birthdays[i][2] | date : 'yyyy-MM-dd'}}</p>
+            <div class="birthday-container" style="border-color: #dfdf4a;">
+                <mat-icon class="birthday-cake" style="color: #e6e600">cake</mat-icon>
+                <h2>Upcoming birthdays</h2>
+                <div class="birthday-component">
+                    <ng-container *ngFor="let birthday of birthdays$ | async; let i = index">
+                        <div class=" full-width d-flex single-birthday "
+                            style="border-color: #dfdf4a; background-color: #dfdf4a2d;">
+                            <div class="birthday-content">
+                                <p>{{birthdays[i][0]}} {{birthdays[i][1]}}</p>
+                            </div>
+                            <div class="birthday-content">
+
+                                <p>{{birthdays[i][2] | date : 'dd.MM.yy'}}</p>
+                            </div>
                         </div>
-                    </div>
-                </ng-container>
+                    </ng-container>
+                </div>
             </div>
-        </div>
 
-        <div class="birthday-container" style="border-color: #4adf4a;">
-            <mat-icon class="birthday-cake" style="color: #00e645">payments</mat-icon>
-            <h2>Latest added incomes</h2>
-            <div class="birthday-component">
-                <ng-container *ngFor="let income of latestIncome$ | async; let i = index">
-                    <div class=" full-width d-flex single-birthday " style="border-color: #4adf4a; background-color: #4adf4a1c;">
-                        <div class="birthday-content">
-                            <!-- <p>{{income[i][0]['latestAmount']}}€</p> -->
-                            <p>{{income[0]['latestAmount']}}€</p>
+            <div class="birthday-container" style="border-color: #4adf4a;">
+                <mat-icon class="birthday-cake" style="color: #00e645">payments</mat-icon>
+                <h2>Latest added incomes</h2>
+                <div class="birthday-component">
+                    <ng-container  *ngFor="let income of latestIncome$ | async; let i = index">
+                        <div (click)="openIncomeInfoDialog(income)" class=" full-width d-flex single-activity "
+                            style="border-color: #4adf4a; background-color: #4adf4a1c;">
+                            <div class="birthday-content">
+                                <!-- <p>{{income[i][0]['latestAmount']}}€</p> -->
+                                <p>{{income[0]['latestAmount']}}€</p>
+                            </div>
+                            <div class="birthday-content">
+                                <p>{{income[0]['latestTimestamp'] | date :'dd.MM.yy'}}</p>
+                            </div>
                         </div>
-                        <div class="birthday-content">
-                            <p>{{income[0]['latestTimestamp'] | date :'yyyy-MM-dd'}}</p>
-                        </div>
-                    </div>
-                </ng-container>
+                    </ng-container>
+                </div>
             </div>
-        </div>
 
-        <div class="birthday-container" style="border-color: #df4a4a;">
-            <mat-icon class="birthday-cake" style="color: #e60000">payments</mat-icon>
-            <h2>Latest added expenses</h2>
-            <div class="birthday-component">
-                <ng-container *ngFor="let expense of latestExpense$ | async; let i = index">
-                    <div class=" full-width d-flex single-birthday " style="border-color: #df4a4a; background-color: #df4a4a27;">
-                        <div class="birthday-content">
-                            <!-- <p>{{income[i][0]['latestAmount']}}€</p> -->
-                            <p>{{expense[0]['latestAmount']}}€</p>
+            <div class="birthday-container" style="border-color: #df4a4a;">
+                <mat-icon class="birthday-cake" style="color: #e60000">payments</mat-icon>
+                <h2>Latest added expenses</h2>
+                <div class="birthday-component">
+                    <ng-container *ngFor="let expense of latestExpense$ | async; let i = index">
+                        <div (click)="openIncomeInfoDialog(expense)" class=" full-width d-flex single-activity "
+                            style="border-color: #df4a4a; background-color: #df4a4a27;">
+                            <div class="birthday-content">
+                                <!-- <p>{{income[i][0]['latestAmount']}}€</p> -->
+                                <p>{{expense[0]['latestAmount']}}€</p>
+                            </div>
+                            <div class="birthday-content">
+                                <p>{{expense[0]['latestTimestamp'] | date :'dd.MM.yy'}}</p>
+                            </div>
                         </div>
-                        <div class="birthday-content">
-                            <p>{{expense[0]['latestTimestamp'] | date :'yyyy-MM-dd'}}</p>
-                        </div>
-                    </div>
-                </ng-container>
+                    </ng-container>
+                </div>
             </div>
-        </div>
-
-        <!-- <div class="birthday-container">
-            <mat-icon class="birthday-cake">payments</mat-icon>
-            <h2>Latest Expenses</h2>
-            <div class="birthday-component">
-                <ng-container *ngFor="let birthday of birthdays$ | async; let i = index">
-                    <div class=" full-width d-flex single-birthday ">
-                        <div class="birthday-content">
-                            <p>{{birthdays[i][0]}} {{birthdays[i][1]}}</p>
-                        </div>
-                        <div class="birthday-content">
-
-                            <p>{{birthdays[i][2] | date : 'yyyy-MM-dd'}}</p>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-        </div> -->
-
-
-
-    </mat-card>
-</div>
-
-
-
-
-
-<div class="d-flex gap-32">
-
-    <mat-card class=" mt-32 lower-section p-16">
-        <h1 class="segment-headline translate-16">Blockchain</h1>
-
         
-
-
-       
-
+        </div>
     </mat-card>
-
-
-
 </div>
-
-
-<!-- Birth Date-->
