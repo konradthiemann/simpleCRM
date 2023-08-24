@@ -140,38 +140,37 @@
             <div class="birthday-container" style="border-color: #4adf4a;">
                 <mat-icon class="birthday-cake" style="color: #00e645">payments</mat-icon>
                 <h2>Latest added incomes</h2>
-                <div class="birthday-component">
-                    <ng-container  *ngFor="let income of latestIncome$ | async; let i = index">
-                        <div (click)="openIncomeInfoDialog(income)" class=" full-width d-flex single-activity "
-                            style="border-color: #4adf4a; background-color: #4adf4a1c;">
-                            <div class="birthday-content">
-                                <!-- <p>{{income[i][0]['latestAmount']}}€</p> -->
-                                <p>{{income[0]['latestAmount']}}€</p>
+                <div class="birthday-component" id="latestIncome">
+                        <ng-container *ngFor="let income of latestIncomeSubject | async | slice:0:3">
+                            <div (click)="openIncomeInfoDialog(income)" class="full-width d-flex single-activity"
+                              [style.border-color]="'#4adf4a'" [style.background-color]="'#4adf4a1c'">
+                              <div class="birthday-content">
+                                <p>{{ income[0].latestAmount }}€</p>
+                              </div>
+                              <div class="birthday-content">
+                                <p>{{ income[0].latestTimestamp | date: 'dd.MM.yy' }}</p>
+                              </div>
                             </div>
-                            <div class="birthday-content">
-                                <p>{{income[0]['latestTimestamp'] | date :'dd.MM.yy'}}</p>
-                            </div>
-                        </div>
-                    </ng-container>
+                          </ng-container>
+                      
                 </div>
             </div>
 
             <div class="birthday-container" style="border-color: #df4a4a;">
                 <mat-icon class="birthday-cake" style="color: #e60000">payments</mat-icon>
                 <h2>Latest added expenses</h2>
-                <div class="birthday-component">
-                    <ng-container *ngFor="let expense of latestExpense$ | async; let i = index">
-                        <div (click)="openIncomeInfoDialog(expense)" class=" full-width d-flex single-activity "
-                            style="border-color: #df4a4a; background-color: #df4a4a27;">
-                            <div class="birthday-content">
-                                <!-- <p>{{income[i][0]['latestAmount']}}€</p> -->
-                                <p>{{expense[0]['latestAmount']}}€</p>
-                            </div>
-                            <div class="birthday-content">
-                                <p>{{expense[0]['latestTimestamp'] | date :'dd.MM.yy'}}</p>
-                            </div>
+                <div class="birthday-component" id="latestExpense">
+                      <ng-container *ngFor="let income of latestExpenseSubject | async | slice:0:3">
+                        <div (click)="openIncomeInfoDialog(income)" class="full-width d-flex single-activity"
+                        [style.border-color]="'#df4a4a'" [style.background-color]="'#df4a4a27'">
+                          <div class="birthday-content">
+                            <p>{{ income[0].latestAmount }}€</p>
+                          </div>
+                          <div class="birthday-content">
+                            <p>{{ income[0].latestTimestamp | date: 'dd.MM.yy' }}</p>
+                          </div>
                         </div>
-                    </ng-container>
+                      </ng-container>
                 </div>
             </div>
         

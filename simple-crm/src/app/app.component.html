@@ -32,10 +32,11 @@
       <li (click)="closeDrawer()" routerLinkActive="active" [routerLink]="'/user'"><div class="active-route" routerLinkActive="active"></div><mat-icon>perm_identity</mat-icon>User</li>
       <li (click)="closeDrawer()" routerLinkActive="active" [routerLink]="'/legal-notice'"><div class="active-route" routerLinkActive="active"></div><mat-icon>assignment_ind</mat-icon>Legal notice</li>
       <li (click)="closeDrawer()" routerLinkActive="active" [routerLink]="'/privacy-policy'"><div class="active-route" routerLinkActive="active"></div><mat-icon>policy</mat-icon>Privacy policy</li>
-      <li (click)="closeDrawer()" routerLinkActive="active" [matMenuTriggerFor]="menu"><div class="active-route" routerLinkActive="active"></div><mat-icon>login</mat-icon>Log out</li>
+      <li (click)="closeDrawer()" routerLinkActive="active" (click)="logOut()"><div class="active-route" routerLinkActive="active"></div><mat-icon>login</mat-icon>Log out</li>
+      <!-- <li (click)="closeDrawer()" routerLinkActive="active" [matMenuTriggerFor]="menu"><div class="active-route" routerLinkActive="active"></div><mat-icon>login</mat-icon>Log out</li>
       <mat-menu #menu="matMenu">
-        <button (click)="logOut()" mat-menu-item>Log out</button>
-      </mat-menu>
+        <button class="border-solid" (click)="logOut()" mat-menu-item>Log out</button>
+      </mat-menu> -->
     </ul>
   </mat-drawer>
 

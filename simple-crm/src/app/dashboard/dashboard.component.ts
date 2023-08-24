@@ -1,16 +1,17 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../shared.service';
 import { getFirestore } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { Firestore, collection, docData, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { Chart, registerables } from 'chart.js';
 import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
 import { User } from '../models/user.class';
-import { single, Observable, of } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { DialogShowInfoComponent } from '../dialog-show-info/dialog-show-info.component';
+import { ChangeDetectorRef } from '@angular/core';
+
 Chart.register(...registerables);
 
 @Component({
@@ -26,18 +27,17 @@ export class DashboardComponent implements OnInit {
     private sharedService: SharedService,
     private firestore: Firestore,
     private router: Router,
-
+    private cdRef: ChangeDetectorRef
   ) { }
 
-  ngOnInit(): void {
-    this.createBlockchainJson();
-    this.createBlockchainHistoryJson();
-    this.loadContent();
-    this.getNextBirthdays();
+  async ngOnInit(): Promise<void> {
+    await this.createBlockchainJson();
+    await this.createBlockchainHistoryJson();
+    await this.loadContent();
+    await this.getNextBirthdays();
   }
 
 
-  // test: any = '2';
 
   birthdays: any[] = [];
   birthdays$?: Observable<any[]>;
@@ -76,10 +76,11 @@ export class DashboardComponent implements OnInit {
     { 'ripple': null }
   ];
 
-  latestExpense: any = [];
-  latestExpense$?: Observable<any[]>;
-  latestIncome: any = [];
-  latestIncome$?: Observable<any[]>;
+  latestExpense: any[] = [];
+  latestIncome: any[] = [];
+  latestExpenseSubject: Subject<any[]> = new Subject<any[]>();
+  latestIncomeSubject: Subject<any[]> = new Subject<any[]>();
+
 
   expenses: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   income: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -111,21 +112,25 @@ export class DashboardComponent implements OnInit {
 
 
   loadContent() {
+
     let id = this.sharedService.getCurrentUserId();
+
     if (id !== undefined) {
-      docData(doc(this.firestore, `users/${id}`)).subscribe((user) => {
-        this.name = user['firstName'];
-        this.id = id;
-      });
 
-      onSnapshot(collection(this.firestore, `finances`), () => {
-        this.calcExpenses();
-      });
+      this.getNameAndID(id);
+      this.calcExpenses();
+      this.calculateLatestTransactions();
 
-      // this.calcExpenses();
     } else {
       this.router.navigate(['/log-in']);
     }
+  }
+
+  getNameAndID(id: any) {
+    docData(doc(this.firestore, `users/${id}`)).subscribe((user) => {
+      this.name = user['firstName'];
+      this.id = id;
+    });
   }
 
   async calcExpenses() {
@@ -135,22 +140,17 @@ export class DashboardComponent implements OnInit {
     const colRef = collection(db, "finances");
     const docsSnap = await getDocs(colRef);
 
-    for (let i = 0; i < 11; i++) {
-      this.latestExpense = [];
-      this.latestIncome = [];
-      docsSnap.forEach(doc => {
-        let dateTimestamp = doc.get('date');
-        let timestamp = doc.get('creationDate');
-        let month = new Date(timestamp).getMonth();
-        let year = new Date(timestamp).getFullYear();
-        let currentYear = new Date().getFullYear();
-        let currentMonth = new Date().getMonth();
-        let firstName = doc.get('firstName');
-        let lastName = doc.get('lastName');
-        let amount = doc.get('amount');
-        let category = doc.get('category');
-        let note = doc.get('note');
-        let transaction = doc.get('transaction');
+    docsSnap.forEach(doc => {
+      let timestamp = doc.get('creationDate');
+      let month = new Date(timestamp).getMonth();
+      let year = new Date(timestamp).getFullYear();
+      let currentYear = new Date().getFullYear();
+      let currentMonth = new Date().getMonth();
+      let amount = doc.get('amount');
+      let category = doc.get('category');
+      let transaction = doc.get('transaction');
+
+      for (let i = 0; i < 11; i++) {
 
         if (i == month && year == currentYear && transaction == 'expense') {
           this.expenses[i] += +amount;
@@ -167,65 +167,84 @@ export class DashboardComponent implements OnInit {
         if (currentYear == year && currentMonth == month && transaction == 'income' && i == 10) {
           this.calcMonthIncomeOverview(category, amount)
         }
+      }
+    });
 
-        if (transaction == 'expense' && i == 10) {
-          const newExpense = {
-            "latestDateTimestamp": dateTimestamp,
-            "latestTimestamp": timestamp,
-            "latestFirstName": firstName,
-            "latestLastName": lastName,
-            "latestAmount": amount,
-            "latestCategory": category,
-            "latestNote": note,
-          };
-
-          this.latestExpense.push([newExpense]);
-        }
-
-        if (transaction == 'income' && i == 10) {
-          const newIncome = {
-            "latestDateTimestamp": dateTimestamp,
-            "latestTimestamp": timestamp,
-            "latestFirstName": firstName,
-            "latestLastName": lastName,
-            "latestAmount": amount,
-            "latestCategory": category,
-            "latestNote": note,
-          };
-          this.latestIncome.push([newIncome]);
-        }
-
-      });
-
-      this.sortLatestExpense(this.latestExpense);
-      this.sortLatestExpense(this.latestIncome);
-
-      this.totalYearExpenses = this.formatNumberWithDots(this.expenses.reduce((a: any, b: any) => a + b, 0));
-      this.totalYearIncome = this.formatNumberWithDots(this.income.reduce((a: any, b: any) => a + b, 0));
-
-    }
-    
-    this.latestExpense$ = of(this.latestExpense);
-    this.latestIncome$ = of(this.latestIncome);
+    this.totalYearExpenses = this.formatNumberWithDots(this.expenses.reduce((a: any, b: any) => a + b, 0));
+    this.totalYearIncome = this.formatNumberWithDots(this.income.reduce((a: any, b: any) => a + b, 0));
 
     this.loadTestChart();
     this.loadPieChart();
     this.loadPieChartIncomes();
   }
 
-  sortLatestExpense(transaction: any) {
+
+  async calculateLatestTransactions() {
+    this.latestExpense = [];
+    this.latestIncome = [];
+
+    const db = getFirestore();
+    const colRef = collection(db, "finances");
+    const docsSnap = await getDocs(colRef);
+
+    docsSnap.forEach(doc => {
+      let dateTimestamp = doc.get('date');
+      let timestamp = doc.get('creationDate');
+      let firstName = doc.get('firstName');
+      let lastName = doc.get('lastName');
+      let amount = doc.get('amount');
+      let category = doc.get('category');
+      let note = doc.get('note');
+      let transaction = doc.get('transaction');
+
+      if (transaction == 'expense') {
+        const newExpense = {
+          "latestDateTimestamp": dateTimestamp,
+          "latestTimestamp": timestamp,
+          "latestFirstName": firstName,
+          "latestLastName": lastName,
+          "latestAmount": amount,
+          "latestCategory": category,
+          "latestNote": note,
+        };
+
+        this.latestExpense.push([newExpense]);
+      }
+
+      if (transaction == 'income') {
+        const newIncome = {
+          "latestDateTimestamp": dateTimestamp,
+          "latestTimestamp": timestamp,
+          "latestFirstName": firstName,
+          "latestLastName": lastName,
+          "latestAmount": amount,
+          "latestCategory": category,
+          "latestNote": note,
+        };
+        this.latestIncome.push([newIncome]);
+      }
+
+    });
+
+    this.sortLatestTransaction(this.latestExpense);
+    this.sortLatestTransaction(this.latestIncome);
+
+    this.latestExpenseSubject.next(this.latestExpense);
+    this.latestIncomeSubject.next(this.latestIncome);
+
+    this.cdRef.detectChanges();
+
+  }
+
+
+  sortLatestTransaction(transaction: any) {
     transaction.sort((a: any, b: any) => {
       let timestampA = a[0].latestDateTimestamp;
       let timestampB = b[0].latestDateTimestamp;
-      return timestampA - timestampB;
+      return timestampB - timestampA;
     });
-    
-    this.latestExpense = this.latestExpense.reverse();
-    this.latestIncome = this.latestIncome.reverse();
-    this.latestExpense = this.latestExpense.slice(0, 3);
-    this.latestIncome = this.latestIncome.slice(0, 3);
-    // transaction = transaction.slice(0, 3);
   }
+
 
   calcMonthExpenseOverview(category: any, amount: any) {
     for (let j = 0; j < this.expensesJSON[0].length; j++) {
@@ -251,8 +270,6 @@ export class DashboardComponent implements OnInit {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
-  loadLatestExpense() {
-  }
 
   pieChart: any;
   pieChartIncomes: any;
@@ -379,6 +396,7 @@ export class DashboardComponent implements OnInit {
 
   myChart: any;
 
+
   loadTestChart() {
     if (this.myChart != undefined) {
       this.myChart.destroy();
@@ -464,8 +482,6 @@ export class DashboardComponent implements OnInit {
     this.blockchainPrices[4] = this.blockchainData['usd-coin']['eur'];
     this.blockchainPrices[5] = this.blockchainData['ripple']['eur'];
     this.loadBlockchainChart();
-    // console.log(this.blockchainPrices, 'blockchainPrices');
-
   }
 
   async createBlockchainHistoryJson() {
@@ -473,7 +489,7 @@ export class DashboardComponent implements OnInit {
       let response = await fetch(`https://api.coingecko.com/api/v3/coins/${this.blockchainNames[i]}/market_chart?vs_currency=eur&days=7&interval=daily`)
       let blockchainApi = await response.json();
       this.blockchainHistory[i] = blockchainApi;
-      
+
       this.getHistoryDate(this.blockchainHistory);
     }
     this.getHistoryData(this.blockchainHistory);
@@ -681,8 +697,6 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
-
-    console.log("Chart instance created:", this.blockchainChartHistoryBitcoin);
 
   }
 
@@ -976,8 +990,8 @@ export class DashboardComponent implements OnInit {
 
   openIncomeInfoDialog(info: any) {
     const dialog = this.dialog.open(DialogShowInfoComponent, {
-      data: info, 
-  });
+      data: info,
+    });
   }
 
 }

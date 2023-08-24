@@ -33,7 +33,7 @@ export class DialogChangePasswordComponent {
     if (this.newPassword == this.newPasswordRepeated) {
       this.savePassword();
     } else {
-      console.log('the passwords you entered dont match, please try again!');
+      alert('the passwords you entered dont match, please try again!');
     }
   }
 

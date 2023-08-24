@@ -58,6 +58,7 @@ export class DialogLogInComponent implements OnInit {
         this.dialog.open(DialogLogInSuccessfulComponent, {
           enterAnimationDuration: '450ms',
           exitAnimationDuration: '450ms'
+          
         });
         this.router.navigate(['/dashboard', doc.id]);
         this.loading = false;

@@ -24,7 +24,6 @@ export class DialogAddUserComponent {
     const isEmailTaken = await this.validateEmail(this.user.email);
   
     if (isEmailTaken) {
-      console.log(isEmailTaken);
       this.emailAlreadyTaken = true;
     } else {
       this.emailAlreadyTaken = false; // Setze die Variable zurück, wenn die E-Mail nicht vergeben ist

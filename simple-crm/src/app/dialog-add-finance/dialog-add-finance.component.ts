@@ -1,12 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Firestore, addDoc, collection, getDoc, getDocs } from '@angular/fire/firestore';
-
-import { doc } from "firebase/firestore";
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Finance } from '../models/finance.class';
 import { DialogAddFinanceSuccessfulComponent } from '../dialog-add-finance-successful/dialog-add-finance-successful.component';
 import { User } from 'src/models/user.class';
 import { SharedService } from '../shared.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -21,6 +20,7 @@ export class DialogAddFinanceComponent implements OnInit{
     public dialogRef: MatDialogRef<DialogAddFinanceComponent>,
     public dialog: MatDialog,
     public sharedService: SharedService,
+    public dashboard: DashboardComponent,
   ) { }
 
   ngOnInit(): void {
@@ -57,10 +57,12 @@ export class DialogAddFinanceComponent implements OnInit{
     this.loading = true;
     addDoc(collection(this.firestore, 'finances'), this.finance.toJSON()).then((result: any) => {
       this.loading = false;
+      this.dashboard.calculateLatestTransactions();
       this.dialog.open(DialogAddFinanceSuccessfulComponent, {
         enterAnimationDuration: '450ms',
         exitAnimationDuration: '450ms'
       });
+      
       this.dialogRef.close();
     });
   }

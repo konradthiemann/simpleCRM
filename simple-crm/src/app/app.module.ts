@@ -101,7 +101,10 @@ import { DialogShowInfoComponent } from './dialog-show-info/dialog-show-info.com
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [SharedService],
+  providers: [
+    SharedService,
+    DashboardComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

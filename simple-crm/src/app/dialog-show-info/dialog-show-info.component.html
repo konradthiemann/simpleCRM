@@ -3,7 +3,8 @@
     <div >
         <h2>{{data[0].latestFirstName}} {{data[0].latestLastName}}</h2>
         <div class="mt-32">
-            <p><b>date:</b> {{data[0].latestTimestamp | date :'dd.MM.yy'}}</p>
+            <p><b>creation date:</b> {{data[0].latestDateTimestamp | date :'dd.MM.yy'}}</p>
+            <p><b>billing date:</b> {{data[0].latestTimestamp | date :'dd.MM.yy'}}</p>
             <p><b>category:</b> {{data[0].latestCategory}}</p>
             <p><b>amount:</b> {{data[0].latestAmount}}€</p>
         </div>
