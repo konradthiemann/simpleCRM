@@ -103,7 +103,8 @@ import { DialogShowInfoComponent } from './dialog-show-info/dialog-show-info.com
   ],
   providers: [
     SharedService,
-    DashboardComponent
+    DashboardComponent,
+    UserDetailComponent,
   ],
   bootstrap: [AppComponent]
 })

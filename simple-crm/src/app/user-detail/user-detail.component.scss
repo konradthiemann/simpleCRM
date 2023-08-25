@@ -84,6 +84,15 @@
     margin-right: 16px;
 }
 
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+    margin: 16px 0;
+    position: relative;
+    height: 56px;
+    align-items: center;
+}
+
 @media(max-width:950px){
     .td-creator{
         display: none;

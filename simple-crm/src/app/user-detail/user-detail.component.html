@@ -41,6 +41,14 @@
     </mat-card-content>
 </mat-card>
 
+<div class="button-container">
+
+    <button (click)="openAddFinanceDialog(user.id)" class="add-finance-button" mat-fab
+        color="primary" matTooltip="Add finance" matTooltipPosition="above">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
 <mat-card class="mt-32">
     <mat-card-header>
         <mat-card-title>
@@ -97,10 +105,7 @@
     </mat-card-content>
 </mat-card>
 
-<button (click)="openAddFinanceDialog(user.id)" class="add-finance-button" mat-fab
-    color="primary" matTooltip="Add finance" matTooltipPosition="above">
-    <mat-icon>add</mat-icon>
-</button>
+
 
 <!-- <button *ngIf="user.email == currentUserEmail" (click)="openAddFinanceDialog()" class="add-finance-button" mat-fab
     color="primary" matTooltip="Add finance" matTooltipPosition="above">

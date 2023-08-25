@@ -84,7 +84,9 @@ export class UserDetailComponent implements OnInit {
   
       const expenseTransactions:any = [];
       const incomeTransactions:any = [];
-      console.log('getFinanceFunction');
+
+      // console.log('getFinanceFunction');
+      
       docsSnap.forEach(doc => {
         if (doc.get('userId') == this.userId && doc.get('transaction') == 'expense') {
           expenseTransactions.push(doc.data());

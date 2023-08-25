@@ -7,6 +7,7 @@ import { User } from 'src/models/user.class';
 import { SharedService } from '../shared.service';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Observable } from 'rxjs';
+import { UserDetailComponent } from '../user-detail/user-detail.component';
 
 @Component({
   selector: 'app-dialog-add-finance',
@@ -21,6 +22,7 @@ export class DialogAddFinanceComponent implements OnInit{
     public dialog: MatDialog,
     public sharedService: SharedService,
     public dashboard: DashboardComponent,
+    public userDetail: UserDetailComponent
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +60,7 @@ export class DialogAddFinanceComponent implements OnInit{
     addDoc(collection(this.firestore, 'finances'), this.finance.toJSON()).then((result: any) => {
       this.loading = false;
       this.dashboard.calculateLatestTransactions();
+      this.userDetail.getFinances();
       this.dialog.open(DialogAddFinanceSuccessfulComponent, {
         enterAnimationDuration: '450ms',
         exitAnimationDuration: '450ms'
