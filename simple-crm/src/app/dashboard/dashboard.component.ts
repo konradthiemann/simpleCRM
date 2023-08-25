@@ -76,6 +76,15 @@ export class DashboardComponent implements OnInit {
     { 'ripple': null }
   ];
 
+  blockchainHistoryData: any = [
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+    { 'historyPrices': [] },
+  ];
+
   latestExpense: any[] = [];
   latestIncome: any[] = [];
   latestExpenseSubject: Subject<any[]> = new Subject<any[]>();
@@ -178,7 +187,7 @@ export class DashboardComponent implements OnInit {
     this.loadPieChartIncomes();
   }
 
-
+ 
   async calculateLatestTransactions() {
     this.latestExpense = [];
     this.latestIncome = [];
@@ -231,9 +240,7 @@ export class DashboardComponent implements OnInit {
 
     this.latestExpenseSubject.next(this.latestExpense);
     this.latestIncomeSubject.next(this.latestIncome);
-
     this.cdRef.detectChanges();
-
   }
 
 
@@ -256,6 +263,7 @@ export class DashboardComponent implements OnInit {
     this.totalMonthExpenses = this.formatNumberWithDots(this.monthAmount.reduce((a: any, b: any) => a + b, 0));
   }
 
+
   calcMonthIncomeOverview(category: any, amount: any) {
     for (let j = 0; j < this.incomesJSON[0].length; j++) {
       if (this.incomesJSON[0][j]['category'] == category) {
@@ -265,6 +273,7 @@ export class DashboardComponent implements OnInit {
     }
     this.totalMonthIncomes = this.formatNumberWithDots(this.monthAmountIncomes.reduce((a: any, b: any) => a + b, 0));
   }
+
 
   formatNumberWithDots(number: any) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -521,14 +530,7 @@ export class DashboardComponent implements OnInit {
     this.loadBlockchainChartHistoryXRP();
   }
 
-  blockchainHistoryData: any = [
-    { 'historyPrices': [] },
-    { 'historyPrices': [] },
-    { 'historyPrices': [] },
-    { 'historyPrices': [] },
-    { 'historyPrices': [] },
-    { 'historyPrices': [] },
-  ];
+  
 
   getSingleHistoryDataSet(history: any, j: any) {
     for (let i = 0; i < history['prices'].length; i++) {
@@ -985,7 +987,6 @@ export class DashboardComponent implements OnInit {
       return dateA.getTime() - dateB.getTime();
     });
     this.birthdays = this.birthdays.slice(0, 3);
-    // console.log(this.birthdays);
   }
 
   openIncomeInfoDialog(info: any) {
