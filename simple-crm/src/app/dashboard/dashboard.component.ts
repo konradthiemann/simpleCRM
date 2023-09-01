@@ -8,7 +8,7 @@ import { Firestore, collection, docData, getDocs, onSnapshot } from '@angular/fi
 import { Chart, registerables } from 'chart.js';
 import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
 import { User } from '../models/user.class';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, takeUntil } from 'rxjs';
 import { DialogShowInfoComponent } from '../dialog-show-info/dialog-show-info.component';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit {
     await this.loadContent();
     await this.getNextBirthdays();
   }
-
 
 
   birthdays: any[] = [];
@@ -91,8 +90,10 @@ export class DashboardComponent implements OnInit {
   latestIncomeSubject: Subject<any[]> = new Subject<any[]>();
 
 
-  expenses: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  income: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // expenses: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // income: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  expenses: any = [];
+  income: any = [];
   monthAmount: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   monthAmountIncomes: any = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -149,35 +150,39 @@ export class DashboardComponent implements OnInit {
     const colRef = collection(db, "finances");
     const docsSnap = await getDocs(colRef);
 
-    docsSnap.forEach(doc => {
-      let timestamp = doc.get('creationDate');
-      let month = new Date(timestamp).getMonth();
-      let year = new Date(timestamp).getFullYear();
-      let currentYear = new Date().getFullYear();
-      let currentMonth = new Date().getMonth();
-      let amount = doc.get('amount');
-      let category = doc.get('category');
-      let transaction = doc.get('transaction');
 
-      for (let i = 0; i < 11; i++) {
-
-        if (i == month && year == currentYear && transaction == 'expense') {
-          this.expenses[i] += +amount;
+      docsSnap.forEach(doc => {
+        let timestamp = doc.get('creationDate');
+        let month = new Date(timestamp).getMonth();
+        let year = new Date(timestamp).getFullYear();
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth();
+        let amount = doc.get('amount');
+        let category = doc.get('category');
+        let transaction = doc.get('transaction');
+  
+        for (let i = 0; i < 11; i++) {
+  
+          if (i == month && year == currentYear && transaction == 'expense') {
+            this.expenses[i] += +amount;
+          }
+  
+          if (i == month && year == currentYear && transaction == 'income') {
+            this.income[i] += +amount;
+          }
+  
+          if (currentYear == year && currentMonth == month && transaction == 'expense' && i == 10) {
+            this.calcMonthExpenseOverview(category, amount)
+          }
+  
+          if (currentYear == year && currentMonth == month && transaction == 'income' && i == 10) {
+            this.calcMonthIncomeOverview(category, amount)
+          }
         }
+      });
 
-        if (i == month && year == currentYear && transaction == 'income') {
-          this.income[i] += +amount;
-        }
 
-        if (currentYear == year && currentMonth == month && transaction == 'expense' && i == 10) {
-          this.calcMonthExpenseOverview(category, amount)
-        }
-
-        if (currentYear == year && currentMonth == month && transaction == 'income' && i == 10) {
-          this.calcMonthIncomeOverview(category, amount)
-        }
-      }
-    });
+    
 
     this.totalYearExpenses = this.formatNumberWithDots(this.expenses.reduce((a: any, b: any) => a + b, 0));
     this.totalYearIncome = this.formatNumberWithDots(this.income.reduce((a: any, b: any) => a + b, 0));
@@ -194,60 +199,66 @@ export class DashboardComponent implements OnInit {
 
     const db = getFirestore();
     const colRef = collection(db, "finances");
-    const docsSnap = await getDocs(colRef);
+    // const docsSnap = await getDocs(colRef);
+    
+    const docsOnSnapshot = onSnapshot(colRef, (list) => {
 
-    docsSnap.forEach(doc => {
-      let dateTimestamp = doc.get('date');
-      let timestamp = doc.get('creationDate');
-      let firstName = doc.get('firstName');
-      let lastName = doc.get('lastName');
-      let amount = doc.get('amount');
-      let category = doc.get('category');
-      let note = doc.get('note');
-      let transaction = doc.get('transaction');
-
-      if (transaction == 'expense') {
-        const newExpense = {
-          "latestDateTimestamp": dateTimestamp,
-          "latestTimestamp": timestamp,
-          "latestFirstName": firstName,
-          "latestLastName": lastName,
-          "latestAmount": amount,
-          "latestCategory": category,
-          "latestNote": note,
-        };
-
-        this.latestExpense.push([newExpense]);
-      }
-
-      if (transaction == 'income') {
-        const newIncome = {
-          "latestDateTimestamp": dateTimestamp,
-          "latestTimestamp": timestamp,
-          "latestFirstName": firstName,
-          "latestLastName": lastName,
-          "latestAmount": amount,
-          "latestCategory": category,
-          "latestNote": note,
-        };
-        this.latestIncome.push([newIncome]);
-      }
-
+      list.forEach(doc => {
+        let dateTimestamp = doc.get('date');
+        let timestamp = doc.get('creationDate');
+        let firstName = doc.get('firstName');
+        let lastName = doc.get('lastName');
+        let amount = doc.get('amount');
+        let category = doc.get('category');
+        let note = doc.get('note');
+        let transaction = doc.get('transaction');
+  
+        if (transaction == 'expense') {
+          const newExpense = {
+            "latestDateTimestamp": dateTimestamp,
+            "latestTimestamp": timestamp,
+            "latestFirstName": firstName,
+            "latestLastName": lastName,
+            "latestAmount": amount,
+            "latestCategory": category,
+            "latestNote": note,
+          };
+  
+          this.latestExpense.push(newExpense);
+          
+        }
+  
+        if (transaction == 'income') {
+          const newIncome = {
+            "latestDateTimestamp": dateTimestamp,
+            "latestTimestamp": timestamp,
+            "latestFirstName": firstName,
+            "latestLastName": lastName,
+            "latestAmount": amount,
+            "latestCategory": category,
+            "latestNote": note,
+          };
+          this.latestIncome.push(newIncome);
+        }
+  
+      });
+  
+      this.sortLatestTransaction(this.latestExpense);
+      this.sortLatestTransaction(this.latestIncome);
+  
+      this.latestExpenseSubject.next(this.latestExpense);
+      this.latestIncomeSubject.next(this.latestIncome);
+      this.cdRef.detectChanges();
     });
 
-    this.sortLatestTransaction(this.latestExpense);
-    this.sortLatestTransaction(this.latestIncome);
-
-    this.latestExpenseSubject.next(this.latestExpense);
-    this.latestIncomeSubject.next(this.latestIncome);
-    this.cdRef.detectChanges();
+    
   }
 
 
   sortLatestTransaction(transaction: any) {
     transaction.sort((a: any, b: any) => {
-      let timestampA = a[0].latestDateTimestamp;
-      let timestampB = b[0].latestDateTimestamp;
+      let timestampA = a.latestDateTimestamp;
+      let timestampB = b.latestDateTimestamp;
       return timestampB - timestampA;
     });
   }
@@ -403,7 +414,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  myChart: any;
+  myChart: any ;
 
 
   loadTestChart() {

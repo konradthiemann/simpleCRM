@@ -9,6 +9,9 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { Observable } from 'rxjs';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+
 @Component({
   selector: 'app-dialog-add-finance',
   templateUrl: './dialog-add-finance.component.html',
@@ -22,14 +25,17 @@ export class DialogAddFinanceComponent implements OnInit{
     public dialog: MatDialog,
     public sharedService: SharedService,
     public dashboard: DashboardComponent,
-    public userDetail: UserDetailComponent
+    public userDetail: UserDetailComponent,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.people$ = this.sharedService.getUsers();
-    
+    this.setFormGroup();
   }
 
+  // form: FormGroup = new FormGroup({});
+  form!: FormGroup;
   disableSelection: boolean = false;
 
   finance: Finance = new Finance();
@@ -46,31 +52,58 @@ export class DialogAddFinanceComponent implements OnInit{
 
 
   saveFinance() {
-    this.finance.creationDate = this.creationDate?.getTime();
-    this.finance.category = this.category;
-    this.finance.userId = this.chosenUser;
-    this.finance.note = this.note;
-    this.finance.transaction = this.transaction;
-    this.finance.firstName = this.sharedService.getCurrentUserFirstName();
-    this.finance.lastName = this.sharedService.getCurrentUserLastName();
-    let date = new Date();
-    this.finance.date = date.getTime();
-
-    this.loading = true;
-    addDoc(collection(this.firestore, 'finances'), this.finance.toJSON()).then((result: any) => {
-      this.loading = false;
-      this.dashboard.calculateLatestTransactions();
-      this.userDetail.getFinances();
-      this.dialog.open(DialogAddFinanceSuccessfulComponent, {
-        enterAnimationDuration: '450ms',
-        exitAnimationDuration: '450ms'
+    if (this.form?.valid) {
+      this.finance.creationDate = this.creationDate?.getTime();
+      this.finance.category = this.form.get('category')?.value; 
+      this.finance.userId = this.chosenUser;
+      this.finance.note = this.form.get('note')?.value; 
+      this.finance.transaction = this.form.get('transaction')?.value; 
+      this.finance.firstName = this.sharedService.getCurrentUserFirstName();
+      this.finance.lastName = this.sharedService.getCurrentUserLastName();
+      let date = new Date();
+      this.finance.date = date.getTime();
+  
+      this.loading = true;
+      addDoc(collection(this.firestore, 'finances'), this.finance.toJSON()).then((result: any) => {
+        this.loading = false;
+        this.dashboard.calculateLatestTransactions();
+        this.dialog.open(DialogAddFinanceSuccessfulComponent, {
+          enterAnimationDuration: '450ms',
+          exitAnimationDuration: '450ms'
+        });
+        
+        this.dialogRef.close();
       });
-      
-      this.dialogRef.close();
+    }
+  }
+
+
+  setFormGroup() {
+    this.form = this.fb.group({
+      transaction: ['', Validators.required],
+      category: ['', Validators.required,],
+      note: ['', Validators.required],
+      chosenUser: ['', Validators.required],
+      creationDate: ['', Validators.required],
+      amount: ['', Validators.required],
+    });
+
+    this.form.get('transaction')?.valueChanges.subscribe(transaction => {
+      this.form.get('category')?.setValue('');
     });
   }
 
-  addCategory(category: any) {
-    this.category = category;
+  
+  getCategoryOptions(): string[] {
+    const selectedTransaction = this.form.get('transaction')?.value;
+
+    return selectedTransaction === 'expense'
+      ? ['Salaries', 'Hardware and Computing Resources', 'Electricity Costs', 'Research and Development', 'Security Measures', 'Legal Consultation']
+      : ['Crypto Consulting Services', 'Blockchain Development Services', 'Crypto Mining', 'ICO/STO Consulting', 'Project Implementation'];
+  }
+  
+
+  setCategory(category: string) {
+    this.form.get('category')?.setValue(category);
   }
 }

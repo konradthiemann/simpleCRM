@@ -16,7 +16,7 @@
     <div class="user-details">
         <h2>{{user.firstName}} {{user.lastName}}</h2>
         <br>
-        Birth date: {{user.birthDate | date : 'yyyy-MM-dd'}}
+        Birth date: {{user.birthDate | date : 'dd-MM-yyyy'}}
         <br>
         <div>
             Email: <a class="c-white" href="mailto: {{user.email}}">{{user.email}}</a>
@@ -63,11 +63,11 @@
                 <th>Amount</th>
                 <th>Date</th>
             </tr>
-            <tr *ngFor="let income of incomeTransactions$ | async" (click)="openNoteDialog(income)">
+            <tr *ngFor="let income of incomeTransactions$ |async" (click)="openNoteDialog(income)">
                 <td class="quater-width td-creator">{{income.firstName}} {{income.lastName}}</td>
                 <td class="quater-width">{{income.category}}</td>
                 <td class="quater-width">{{income.amount}}€</td>
-                <td class="quater-width">{{income.creationDate | date : 'yyyy-MM-dd'}}</td>
+                <td class="quater-width">{{income.creationDate | date : 'dd-MM-yyyy'}}</td>
 
                 <button mat-mini-fab (click)="deleteIncome(income, $event)" class="delete-button pin-right">
                     <mat-icon>delete</mat-icon>
@@ -95,7 +95,7 @@
                 <td class="quater-width td-creator">{{expense.firstName}} {{expense.lastName}}</td>
                 <td class="quater-width">{{expense.category}}</td>
                 <td class="quater-width">{{expense.amount}}€</td>
-                <td class="quater-width">{{expense.creationDate | date : 'yyyy-MM-dd'}}</td>
+                <td class="quater-width">{{expense.creationDate | date : 'dd-MM-yyyy'}}</td>
 
                 <button mat-mini-fab (click)="deleteExpense(expense, $event)" class="delete-button pin-right">
                     <mat-icon>delete</mat-icon>

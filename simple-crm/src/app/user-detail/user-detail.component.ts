@@ -6,13 +6,13 @@ import { User } from 'src/models/user.class';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { DialogDeleteUserComponent } from '../dialog-delete-user/dialog-delete-user.component';
-import { collection, getDocs, getFirestore } from '@angular/fire/firestore';
+import { collection, doc, getDocs, getFirestore, onSnapshot } from '@angular/fire/firestore';
 import { DialogAddFinanceComponent } from '../dialog-add-finance/dialog-add-finance.component';
 import { SharedService } from '../shared.service';
 import { DialogLogInComponent } from '../dialog-log-in/dialog-log-in.component';
 import { DialogChangePasswordComponent } from '../dialog-change-password/dialog-change-password.component';
 import { DialogShowNoteComponent } from '../dialog-show-note/dialog-show-note.component';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
@@ -31,6 +31,9 @@ export class UserDetailComponent implements OnInit {
   expenseTransactions$: Observable<any[]> | undefined;
   incomeTransactions$: Observable<any[]> | undefined;
 
+  expenseTransactionsSubject = new BehaviorSubject<any[]>([]);
+  incomeTransactionsSubject = new BehaviorSubject<any[]>([]);
+
   expenseTransactions: any = [];
   incomeTransactions: any = [];
 
@@ -45,12 +48,10 @@ export class UserDetailComponent implements OnInit {
     this.checkForLogIn();
     this.getUserId();
     this.currentUserEmail = this.sharedService.getCurrentEmail();
-    this.getFinances().then(() => {
-      this.expenseTransactions$ = of(this.expenseTransactions);
-      this.incomeTransactions$ = of(this.incomeTransactions);
-    });
-    // this.subscribeFinance();
+    this.setObservable();
+    this.updateFinances();
   }
+
 
   checkForLogIn() {
     let id = this.sharedService.getCurrentUserId();
@@ -59,12 +60,14 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
+
   getUserId() {
     this.route.paramMap.subscribe(paramMap => {
       this.userId = paramMap.get('id');
       this.getUser();
     })
   }
+
 
   getUser() {
     this.firestore
@@ -76,41 +79,41 @@ export class UserDetailComponent implements OnInit {
       });
   }
 
-  
 
-  async getFinances(): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      const db = getFirestore();
-      const colRef = collection(db, "finances");
-      const docsSnap = await getDocs(colRef);
-  
-      const expenseTransactions:any = [];
-      const incomeTransactions:any = [];
-      
-      docsSnap.forEach(doc => {
+  setObservable() {
+    this.expenseTransactions$ = this.expenseTransactionsSubject.asObservable();
+    this.incomeTransactions$ = this.incomeTransactionsSubject.asObservable();
+  }
+
+
+  updateFinances() {
+
+    this.expenseTransactions = [];
+    this.incomeTransactions = [];
+
+    const db = getFirestore();
+    const colRef = collection(db, "finances");
+
+    onSnapshot(colRef, (list) => {
+
+      this.expenseTransactions = [];
+      this.incomeTransactions = [];
+
+      list.forEach(doc => {
         if (doc.get('userId') == this.userId && doc.get('transaction') == 'expense') {
-          expenseTransactions.push(doc.data());
+          this.expenseTransactions.push(doc.data());
         }
         if (doc.get('userId') == this.userId && doc.get('transaction') == 'income') {
-          incomeTransactions.push(doc.data());
+          this.incomeTransactions.push(doc.data());
         }
       });
-  
-      this.expenseTransactions = expenseTransactions;
-      this.incomeTransactions = incomeTransactions;
-  
-      resolve();
+
+      this.expenseTransactionsSubject.next(this.expenseTransactions);
+      this.incomeTransactionsSubject.next(this.incomeTransactions);
+
     });
   }
 
-  // subscribeFinance() {
-  //   this.firestore
-  //     .collection('finances')
-  //     .valueChanges()
-  //     .subscribe((changes: any) => {
-  //       this.getFinances();
-  //     })
-  // }
 
   editUserAddress() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
@@ -118,17 +121,20 @@ export class UserDetailComponent implements OnInit {
     dialog.componentInstance.userId = this.userId;
   }
 
+
   editUserDetail() {
     const dialog = this.dialog.open(DialogEditUserComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId = this.userId;
   }
 
+
   deleteUser(user: any) {
     const dialog = this.dialog.open(DialogDeleteUserComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
     dialog.componentInstance.userId = this.userId;
   }
+
 
   openAddFinanceDialog(userId: any) {
     const dialog = this.dialog.open(DialogAddFinanceComponent);
@@ -138,20 +144,19 @@ export class UserDetailComponent implements OnInit {
     dialog.componentInstance.disableSelection = true;
   }
 
+
   openNoteDialog(transaction: any) {
     const dialog = this.dialog.open(DialogShowNoteComponent);
     dialog.componentInstance.userId = this.userId;
     dialog.componentInstance.user = transaction;
   }
 
+
   ChangePassword(user: any) {
     const dialog = this.dialog.open(DialogChangePasswordComponent);
     dialog.componentInstance.userId = this.userId;
   }
 
-  editFinance() {
-
-  }
 
   async deleteExpense(expense: any, event: Event) {
     event.stopPropagation();
@@ -174,6 +179,7 @@ export class UserDetailComponent implements OnInit {
       }
     }
   }
+
 
   async deleteIncome(income: any, event: Event) {
     event.stopPropagation();

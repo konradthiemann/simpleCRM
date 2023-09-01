@@ -3,9 +3,12 @@
     <h1 mat-dialog-title class="segment-headline">Add finance</h1>
     <div mat-dialog-content>
 
+        <form [formGroup]="form">
         <mat-form-field class="mt-32" appearance="outline">
             <mat-label>Select user</mat-label>
-            <mat-select [(ngModel)]="chosenUser" [disabled]="disableSelection">
+            <!-- <mat-select [(ngModel)]="chosenUser" [disabled]="disableSelection" required> -->
+
+            <mat-select formControlName="chosenUser" [disabled]="disableSelection" required>
                 <mat-option *ngFor="let person of people$ | async" [value]="person.id">
                     {{ person.firstName }} {{ person.lastName }}
                 </mat-option>
@@ -13,46 +16,33 @@
         </mat-form-field>
 
         <div>
-            <mat-form-field class="mt-8" appearance="outline">
+            <mat-form-field class="mt-8 mr-32" appearance="outline">
                 <mat-label>Select transaction</mat-label>
-                <mat-select [(ngModel)]="transaction">
+                <mat-select formControlName="transaction" required >
                     <mat-option value="expense">Expense</mat-option>
                     <mat-option value="income">Income</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="mt-8">
+            <mat-form-field class="mt-8" appearance="outline">
                 <mat-label>Category</mat-label>
-                <input class="disabled-white" disabled required [(ngModel)]="finance.category" matInput
-                    value="{{category}}" placeholder="Category">
-            </mat-form-field>
-
-            <button mat-button [disabled]="!transaction" [matMenuTriggerFor]="menu">select</button>
-            <mat-menu #menu="matMenu">
-                <button *ngIf="transaction === 'expense'" (click)="addCategory('Salaries')"mat-menu-item>Salaries</button>
-                <button *ngIf="transaction === 'expense'" (click)="addCategory('Hardware and Computing Resources')" mat-menu-item>Hardware and Computing Resources</button>
-                <button *ngIf="transaction === 'expense'" (click)="addCategory('Electricity Costs')"mat-menu-item>Electricity Costs</button>
-                <button *ngIf="transaction === 'expense'" (click)="addCategory('Research and Development')"mat-menu-item>Research and Development</button>
-                <button *ngIf="transaction === 'expense'" (click)="addCategory('Security Measures')"mat-menu-item>Security Measures</button>
-                <button *ngIf="transaction === 'expense'" (click)="addCategory('Legal Consultation')"mat-menu-item>Legal Consultation</button>
-                <button *ngIf="transaction === 'income'" (click)="addCategory('Crypto Consulting Services')" mat-menu-item>Crypto Consulting Services</button>
-                <button *ngIf="transaction === 'income'" (click)="addCategory('Blockchain Development Services')" mat-menu-item>Blockchain Development Services</button>
-                <button *ngIf="transaction === 'income'" (click)="addCategory('Crypto Mining')" mat-menu-item>Crypto Mining</button>
-                <button *ngIf="transaction === 'income'" (click)="addCategory('ICO/STO Consulting')" mat-menu-item>ICO/STO Consulting</button>
-                <button *ngIf="transaction === 'income'" (click)="addCategory('Project Implementation')"mat-menu-item>Crypto Payment Integration</button>
-            </mat-menu>
+                <mat-select formControlName="category" [disabled]="!form.get('transaction')?.value" required>
+                  <mat-option *ngFor="let cat of getCategoryOptions()" [value]="cat">{{ cat }}</mat-option>
+                </mat-select>
+              </mat-form-field>
         </div>
 
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Amount</mat-label>
-            <input required [disabled]="loading" [(ngModel)]="finance.amount" type="number" matInput
-                placeholder="Amount">
+            <!-- <input required [disabled]="loading" [(ngModel)]="finance.amount" type="number" matInput placeholder="Amount"> -->
+            <input required [disabled]="loading" formControlName="amount" type="number" matInput placeholder="Amount">
         </mat-form-field>
 
         <div>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Date</mat-label>
-                <input required [disabled]="loading" [(ngModel)]="creationDate" matInput [matDatepicker]="picker1">
+                <input required [disabled]="loading" formControlName="creationDate" matInput [matDatepicker]="picker1">
+                <!-- <input required [disabled]="loading" [(ngModel)]="creationDate" matInput [matDatepicker]="picker1"> -->
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
@@ -60,12 +50,14 @@
 
         <mat-form-field class="full-width">
             <mat-label>Note</mat-label>
-            <textarea [disabled]="loading" [(ngModel)]="note" matInput placeholder="leave a note..."></textarea>
+            <textarea [disabled]="loading" formControlName="note" matInput placeholder="leave a note..."></textarea>
+            <!-- <textarea [disabled]="loading" [(ngModel)]="note" matInput placeholder="leave a note..."></textarea> -->
         </mat-form-field>
 
         <div mat-dialog-actions>
             <button class="border-solid" mat-button (click)="dialogRef.close()">Cancel</button>
-            <button class="border-solid" mat-button (click)="saveFinance()" [mat-dialog-close]="">Save</button>
+            <button class="border-solid" mat-button (click)="saveFinance()"  [mat-dialog-close]=""  [disabled]="!form.valid || loading">Save</button>
         </div>
+    </form>
     </div>
 </div>

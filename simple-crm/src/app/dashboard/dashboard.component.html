@@ -145,10 +145,10 @@
                             <div (click)="openIncomeInfoDialog(income)" class="full-width d-flex single-activity"
                               [style.border-color]="'#4adf4a'" [style.background-color]="'#4adf4a1c'">
                               <div class="birthday-content">
-                                <p>{{ income[0].latestAmount }}€</p>
+                                <p>{{ income.latestAmount }}€</p>
                               </div>
                               <div class="birthday-content">
-                                <p>{{ income[0].latestTimestamp | date: 'dd.MM.yy' }}</p>
+                                <p>{{ income.latestTimestamp | date: 'dd.MM.yy' }}</p>
                               </div>
                             </div>
                           </ng-container>
@@ -164,10 +164,10 @@
                         <div (click)="openIncomeInfoDialog(income)" class="full-width d-flex single-activity"
                         [style.border-color]="'#df4a4a'" [style.background-color]="'#df4a4a27'">
                           <div class="birthday-content">
-                            <p>{{ income[0].latestAmount }}€</p>
+                            <p>{{ income.latestAmount }}€</p>
                           </div>
                           <div class="birthday-content">
-                            <p>{{ income[0].latestTimestamp | date: 'dd.MM.yy' }}</p>
+                            <p>{{ income.latestTimestamp | date: 'dd.MM.yy' }}</p>
                           </div>
                         </div>
                       </ng-container>
